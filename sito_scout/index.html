@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <title>Grumo Appula 1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header" id="header">
+        <div class="header-container">
+            <div class="logo-group">
+                <img src="images/AGESCI.png" width="50px" alt="Logo AGESCI Grumo Appula 1">
+                <h1 class="logo">Grumo Appula 1</h1>
+            </div>
+            <nav class="nav-container">
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#chi-siamo">Chi siamo</a>
+                    <a href="#unita">Le unità</a>
+                    <a href="#galleria">Galleria</a>
+                    <a href="#sede">Sede</a>
+                    <a href="#iscriviti">Iscriviti!</a>
+                </div>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#home" onclick="toggleMenu()">Home</a>
+        <a href="#chi-siamo" onclick="toggleMenu()">Chi siamo</a>
+        <a href="#unita" onclick="toggleMenu()">Le unità</a>
+        <a href="#galleria" onclick="toggleMenu()">Galleria</a>
+        <a href="#sede" onclick="toggleMenu()">Sede</a>
+        <a href="#iscriviti" onclick="toggleMenu()">Iscriviti!</a>
+    </nav>
+    
+    <main>
+        <section class="hero-section" id="home">
+            <div class="background"></div>
+            <div class="overlay-gradient"></div>
+            <div class="content">
+                <h1 class="titoloPrincipale">GRUMO APPULA 1</h1>
+            </div>
+            <p class="descrizione">Sito ufficiale del Gruppo Scout Grumo Appula 1 (AGESCI). Scopri le nostre attività, la nostra storia e come unirti alla nostra avventura!</p>
+            <div class="scroll-indicator">Scorri per esplorare</div>
+        </section>
+
+        <section class="content-section" id="chi-siamo">
+            <div class="section-content" id="box">
+                <h2 class="section-title">Chi Siamo</h2>
+                <div class="box-img"><img src="images/AGESCI.png" alt="immagine logo socut"></div>
+                <p class="section-text">
+                    Il Grumo Appula 1 è un gruppo scout dell'AGESCI che dal 1975 accompagna bambini, ragazzi e giovani 
+                    nel loro percorso di crescita attraverso il metodo educativo scout. La nostra comunità si basa sui 
+                    valori di fratellanza, servizio e avventura, formando cittadini responsabili e attivi nella società.
+                    Crediamo nel potere formativo del gioco, della vita all'aria aperta e dell'imparare facendo.
+                </p>
+            </div>
+        </section>
+
+        <section class="content-section" id="unita">
+            <div class="section-content">
+                <h2 class="section-title">Le Nostre Unità</h2>
+                <p class="section-text">
+                    Il nostro gruppo è strutturato per accogliere ragazzi e ragazze di diverse fasce d'età, offrendo un percorso educativo continuo e stimolante, basato sul Metodo Scout. Ogni unità ha le sue specificità, ma tutte condividono lo spirito di avventura e crescita comunitaria.
+                </p>
+                <div class="unita-container">
+                    <div class="unita-card">
+                        <h3>Branco Seeonee</h3>
+                        <p>(Lupetti/Coccinelle, 8-11 anni) Attraverso il mondo fantastico della Giungla di Kipling, i bambini imparano giocando le prime regole della vita comunitaria, sviluppando le proprie capacità e scoprendo il valore dell'aiuto reciproco. "Del nostro meglio!"</p>
+                    </div>
+                    <div class="unita-card">
+                        <h3>Reparto Artù</h3>
+                        <p>(Esploratori/Guide, 12-16 anni) L'avventura è la parola d'ordine! I ragazzi, divisi in squadriglie, imparano le tecniche scout, si mettono alla prova in imprese entusiasmanti e sviluppano autonomia e senso di responsabilità. "Estote Parati!"</p>
+                    </div>
+                    <div class="unita-card">
+                        <h3>Clan Takoda</h3>
+                        <p>(Rover/Scolte, 17-21 anni) È il tempo della strada, del servizio e della comunità. I giovani adulti si confrontano su temi importanti, scelgono di mettersi al servizio degli altri e si preparano a diventare cittadini attivi e consapevoli. "Servire!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="galleria">
+            <div class="section-content">
+                <h2 class="section-title">I Nostri Momenti</h2>
+                <p class="section-text">
+                    Uno sguardo alle avventure, ai sorrisi e alle attività che caratterizzano la vita del nostro gruppo. Ogni foto racconta una storia di crescita, amicizia e scoperta.
+                </p>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/A3B18A/001f1f?text=Avventura+1" alt="Foto attività scout 1"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/588157/FFFFFF?text=Campo+Estivo" alt="Foto attività scout 2"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/3A5A40/FFFFFF?text=Servizio" alt="Foto attività scout 3"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/DAD7CD/344E41?text=Fuoco+Sera" alt="Foto attività scout 4"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/889678/FFFFFF?text=Giochi" alt="Foto attività scout 5"></div>
+                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/607164/FFFFFF?text=Insieme" alt="Foto attività scout 6"></div>
+                </div>
+                <p class="section-text" style="margin-top: 2rem;">Questi sono solo esempi. Ricorda di sostituire i link placeholder con le tue foto oppure carica le tue immagini nella cartella `/images/` e aggiorna i percorsi `src`.</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="sede">
+            <div class="section-content">
+                <h2 class="section-title">La Nostra Sede</h2>
+                <p class="section-text">
+                    La sede del Grumo Appula 1 si trova nel cuore della città, in [**INSERISCI QUI L'INDIRIZZO DELLA SEDE**]. È uno spazio accogliente dove si svolgono 
+                    le riunioni settimanali, i momenti di formazione e le attività comunitarie. È il punto di partenza 
+                    per tutte le nostre avventure e il luogo dove si costruiscono le amicizie più sincere.
+                    Puoi anche aggiungere qui una mappa di Google Maps!
+                </p>
+            </div>
+        </section>
+
+        <section class="content-section" id="iscriviti">
+            <div class="section-content">
+                <h2 class="section-title">Unisciti a Noi!</h2>
+                <p class="section-text">
+                    Vuoi far parte della nostra famiglia scout? Le iscrizioni sono aperte quasi tutto l'anno! Contattaci per 
+                    conoscere meglio il nostro metodo educativo e scoprire come tuo figlio o tua figlia può crescere attraverso 
+                    il gioco, l'avventura e il servizio. Compila il modulo sottostante o vieni a trovarci in sede!
+                </p>
+                <form class="contact-form" action="#" method="POST"> <input type="text" name="name" placeholder="Il tuo Nome (o del genitore)" required>
+                    <input type="email" name="email" placeholder="La tua Email di contatto" required>
+                    <input type="text" name="subject" placeholder="Oggetto (es. Info Iscrizione)" required>
+                    <textarea name="message" placeholder="Il tuo Messaggio..." rows="5" required></textarea>
+                    <button type="submit" class="form-submit-btn">Invia Messaggio</button>
+                </form>
+                <p class="form-note">Nota: L'invio di questo modulo è solo dimostrativo. Per renderlo funzionante, è necessaria una configurazione lato server o un servizio di terze parti.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer-bottom">
+        <p>&copy; <span id="currentYear"></span> Gruppo Scout Grumo Appula 1 - AGESCI. Tutti i diritti riservati.</p>
+        <p>Indirizzo Sede: [Via Placeholder 123, Grumo Appula (BA)] - Email: [grumoappula1@agesci.it]</p>
+        <p>Sito realizzato con passione.</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"></button>
+    
+    <script src="js/script.js" defer></script>
+</body>
+</html>
