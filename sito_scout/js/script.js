@@ -39,6 +39,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // NUOVA FUNZIONALITÀ: Click sulla home per andare a "Chi siamo"
+    document.addEventListener('click', function(event) {
+        const header = document.querySelector('.main-header');
+        const heroSection = document.querySelector('.hero-section');
+        const isClickOnHeader = header && header.contains(event.target);
+        const isClickOnHeroSection = heroSection && heroSection.contains(event.target);
+        const isClickOnNavLink = event.target.closest('a[href^="#"]');
+        
+        // Naviga alla sezione "Chi siamo" solo se il click è nella hero section e non sull'header
+        if (isClickOnHeroSection && !isClickOnHeader && !isClickOnNavLink) {
+            // Naviga alla sezione "Chi siamo"
+            const chiSiamoSection = document.querySelector('#chi-siamo');
+            if (chiSiamoSection) {
+                const headerOffset = header ? header.offsetHeight : 0;
+                const elementPosition = chiSiamoSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+
     // Gestione scroll: header e bottone torna su
     const header = document.getElementById('header');
     const backToTop = document.getElementById('backToTop');
@@ -163,6 +188,3 @@ function scrollToTopSmoothly() {
         behavior: 'smooth'
     });
 }
-// Se non vuoi una funzione globale, commenta la riga sopra 
-// e decommenta l'event listener per backToTop dentro DOMContentLoaded.
-// In quel caso, rimuovi onclick="scrollToTop()" dal bottone HTML.
