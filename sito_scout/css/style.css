@@ -14,12 +14,11 @@ body {
     color: #333;
 }
 
-/* HERO SECTION */
+
 .hero-section {
     height: 100vh;
     position: relative;
     overflow: hidden;
-    /* cursor: pointer; /* Rimosso se il click sulla hero section è per navigare */
     transition: transform 0.1s ease;
 }
 
@@ -35,8 +34,7 @@ body {
 .background {
     position: absolute;
     inset: 0;
-    background-image: url('../images/foto_sfondo.jpg');
-    /* Percorso aggiornato */
+    background-image: url('../images/foto_sfondo_nuovo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -65,12 +63,12 @@ body {
     font-size: 2rem;
     font-weight: bold;
     transition: transform 0.3s ease;
-    /* Aggiunta per animazione titolo */
 }
 
 .titoloPrincipale {
-    font-family: "Quicksand", sans-serif;
-    font-optical-sizing: auto;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-size: 4rem;
     font-style: normal;
     opacity: 0;
     transform: translateY(30px);
@@ -86,14 +84,12 @@ body {
 
 .descrizione {
     position: absolute;
-    font-family: "Quicksand", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
+    font-family: "Patrick Hand SC", cursive;
     font-weight: 400;
-    font-size: 1rem;
+    font-style: normal;
     color: #001f1f;
-    bottom: 12rem;
-    left: 50%;
+    bottom: 11rem;
+    left: 25%;
     transform: translateX(-50%);
     width: calc(100% - 4rem);
     max-width: 600px;
@@ -112,7 +108,6 @@ body {
     hyphens: auto;
 }
 
-/* HEADER */
 .main-header {
     position: fixed;
     top: 0;
@@ -152,13 +147,12 @@ body {
 }
 
 .logo {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 600;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     color: #001f1f;
-    font-size: 1.8rem;
 }
 
-/* NAVIGAZIONE */
 .nav-container {
     position: relative;
 }
@@ -166,12 +160,15 @@ body {
 .nav-links {
     display: flex;
     align-items: center;
+    font-weight: 400;
+    font-size: 1.2rem;
     gap: 1.5rem;
 }
 
 .nav-links a {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 500;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     text-decoration: none;
     color: #001f1f;
     transition: color 0.3s ease, transform 0.2s ease;
@@ -185,7 +182,6 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* MENU MOBILE (HAMBURGER) */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -236,11 +232,11 @@ body {
 }
 
 .mobile-nav a {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 500;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     text-decoration: none;
     color: #001f1f;
-    font-size: 1.5rem;
     margin: 1rem 0;
     padding: 1rem 2rem;
     border-radius: 10px;
@@ -290,7 +286,6 @@ body {
     }
 }
 
-/* SEZIONI CONTENUTO */
 .content-section {
     min-height: 100vh;
     padding: 6rem 2rem 4rem 2rem;
@@ -325,9 +320,9 @@ body {
 }
 
 .section-title {
-    font-family: "Quicksand", sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     margin-bottom: 2rem;
     color: white;
     opacity: 0;
@@ -336,8 +331,9 @@ body {
 }
 
 .section-text {
-    font-family: "Quicksand", sans-serif;
-    font-size: 1.2rem;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     line-height: 1.8;
     max-width: 800px;
     margin: 0 auto 2rem auto;
@@ -356,7 +352,6 @@ body {
     transform: translateY(0);
 }
 
-/* SEZIONE UNITÀ - CARD */
 .unita-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -386,16 +381,17 @@ body {
 }
 
 .unita-card h3 {
-    font-family: "Quicksand", sans-serif;
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     margin-bottom: 1rem;
     color: #3A5A40;
 }
 
 .unita-card p {
-    font-family: "Quicksand", sans-serif;
-    font-size: 1rem;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     line-height: 1.6;
     color: #555;
 }
@@ -404,7 +400,6 @@ body {
     color: #001f1f;
 }
 
-/* MODULO DI CONTATTO */
 .contact-form {
     display: flex;
     flex-direction: column;
@@ -431,8 +426,9 @@ body {
     padding: 0.75rem 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-family: "Quicksand", sans-serif;
-    font-size: 1rem;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     background: rgba(255, 255, 255, 0.7);
 }
 
@@ -442,13 +438,11 @@ body {
     background: rgba(255, 255, 255, 0.4);
     border-color: rgba(0, 0, 0, 0.2);
     color: #001f1f;
-    /* Testo scuro per leggibilità */
 }
 
 .content-section:nth-child(odd) .contact-form input::placeholder,
 .content-section:nth-child(odd) .contact-form textarea::placeholder {
     color: rgba(0, 31, 31, 0.7);
-    /* Placeholder scuro */
 }
 
 
@@ -503,7 +497,6 @@ body {
     opacity: 0.8;
 }
 
-/* GALLERIA */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -521,7 +514,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     aspect-ratio: 1 / 1;
     background-color: #e0e0e0;
-    /* Colore di fallback per immagini */
 }
 
 .gallery-item img {
@@ -535,7 +527,6 @@ body {
     transform: scale(1.1);
 }
 
-/* BOTTONE TORNA SU */
 .back-to-top {
     position: fixed;
     bottom: 2rem;
@@ -573,16 +564,15 @@ body {
 
 .back-to-top::before {
     content: '↑';
-    font-size: 24px;
-    font-weight: bold;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     color: white;
     animation: bounceArrow 2s infinite;
-    /* Rinominata per chiarezza */
 }
 
 @keyframes bounceArrow {
 
-    /* Rinominata per chiarezza */
     0%,
     20%,
     50%,
@@ -600,19 +590,16 @@ body {
     }
 }
 
-/* PARTICELLE */
 .particle {
     position: absolute;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     pointer-events: none;
     animation: floatParticle 6s ease-in-out infinite;
-    /* Rinominata per chiarezza */
 }
 
 @keyframes floatParticle {
 
-    /* Rinominata per chiarezza */
     0%,
     100% {
         transform: translateY(0px) rotate(0deg);
@@ -623,7 +610,6 @@ body {
     }
 }
 
-/* INDICATORE DI SCROLL */
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
@@ -631,10 +617,10 @@ body {
     transform: translateX(-50%);
     z-index: 4;
     color: #001f1f;
-    font-family: "Quicksand", sans-serif;
-    font-weight: 500;
+    font-family: "Patrick Hand SC", cursive;
+    font-weight: 400;
+    font-style: normal;
     animation: pulseIndicator 2s infinite;
-    /* Rinominata per chiarezza */
 }
 
 .scroll-indicator::after {
@@ -644,12 +630,10 @@ body {
     text-align: center;
     margin-top: 0.5rem;
     animation: bounceArrow 2s infinite .5s;
-    /* Stessa animazione freccia, con delay */
 }
 
 @keyframes pulseIndicator {
 
-    /* Rinominata per chiarezza */
     0%,
     100% {
         opacity: 1;
@@ -660,7 +644,6 @@ body {
     }
 }
 
-/* FOOTER */
 .main-footer-bottom {
     padding: 2rem;
     background-color: #3A5A40;
@@ -679,7 +662,7 @@ body {
     margin-bottom: 0;
 }
 
-/* RESPONSIVE */
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -777,7 +760,6 @@ body {
         padding: 5rem 1rem 2rem 1rem;
     }
 
-    /* Aumentato padding top per header */
     .section-title {
         font-size: 1.8rem;
     }
@@ -797,6 +779,21 @@ body {
     .gallery-grid {
         grid-template-columns: 1fr;
     }
+}
 
-    /* Singola colonna per telefoni piccoli */
+.hero-section {
+    cursor: pointer;
+}
+
+.main-header {
+    cursor: auto;
+}
+
+
+a {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
 }
