@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const isClickInsideNav = mobileNav.contains(event.target);
             const isClickOnToggle = menuToggle && menuToggle.contains(event.target);
             const isNavLink = event.target.closest('.mobile-nav a');
-
             if (isNavLink) {
                 toggleMenu(); // Chiude il menu se si clicca un link di navigazione
             } else if (!isClickInsideNav && !isClickOnToggle) {
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const headerOffset = header ? header.offsetHeight : 0;
                 const elementPosition = chiSiamoSection.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
@@ -69,10 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Gestione scroll: header e bottone torna su
     const header = document.getElementById('header');
     const backToTop = document.getElementById('backToTop');
-
     window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
-
         if (header) {
             if (scrollPosition > 100) {
                 header.classList.add('scrolled');
@@ -80,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 header.classList.remove('scrolled');
             }
         }
-
         if (backToTop) {
             if (scrollPosition > 300) { // Mostra il bottone un po' dopo
                 backToTop.classList.add('visible');
@@ -88,14 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 backToTop.classList.remove('visible');
             }
         }
-
         // Animazioni sezioni in viewport
         const sections = document.querySelectorAll('.content-section');
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
             const windowHeight = window.innerHeight;
-
             if (scrollPosition + windowHeight > sectionTop + sectionHeight * 0.15) { // Leggermente prima
                 section.classList.add('visible');
             }
@@ -117,21 +110,17 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-
             if (targetElement) {
                 let headerOffset = 0;
                 if (header) {
                      headerOffset = header.offsetHeight;
                 }
-
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
-
                 // Se è un link del menu mobile (diverso dal toggle stesso), chiudi il menu
                 if (mobileNav && mobileNav.classList.contains('active') && !this.classList.contains('menu-toggle')) {
                    // La chiusura è gestita dal click listener generale sul document per i navLink
@@ -154,21 +143,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Variazione su durata e delay per un movimento meno sincrono
             particle.style.animationDelay = (Math.random() * 5) + 's';
             particle.style.animationDuration = (Math.random() * 5 + 5) + 's'; // Durata tra 5s e 10s
-
             backgroundContainer.appendChild(particle);
-
             setTimeout(() => {
                 if (particle.parentNode) {
                     particle.parentNode.removeChild(particle);
                 }
             }, 10000); // Rimuovi dopo 10s (deve essere > animation-duration)
         }
-
         // Crea un numero iniziale di particelle
         for (let i = 0; i < 15; i++) { // Aumentato numero iniziale
             createParticle();
         }
-
         // Crea nuove particelle a intervalli
         // setInterval(createParticle, 2500); // Meno frequente
     }
@@ -178,7 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
-
 
     // ---------- Funzionalità per il form di ospitalità (integrata EmailJS) ----------
 
@@ -221,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
         regioneSelect.addEventListener('change', function() {
             const regioneSelezionata = this.value;
             provinciaSelect.innerHTML = '<option value="">Seleziona provincia</option>'; // Reset province
-
             if (regioneSelezionata && provinceData[regioneSelezionata]) {
                 provinciaSelect.disabled = false;
                 provinceData[regioneSelezionata].forEach(provincia => {
@@ -241,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if(formOspitalita) { // Usiamo il nome rinominato
         formOspitalita.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const requiredFields = formOspitalita.querySelectorAll('[required]'); // Usiamo il nome rinominato
             let isValid = true;
 
@@ -280,10 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const oggi = new Date();
             oggi.setHours(0, 0, 0, 0); // Reset hours for accurate comparison
 
-            let dataArrivo, dataPartenza;
-
             if(dataArrivoField && dataArrivoField.value) {
-                dataArrivo = new Date(dataArrivoField.value);
                  if (new Date(dataArrivoField.value) < oggi) { // Confrontiamo la data del campo con oggi
                     dataArrivoField.style.borderColor = '#e74c3c';
                     isValid = false;
@@ -295,7 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
              if(dataPartenzaField && dataPartenzaField.value) {
-                 dataPartenza = new Date(dataPartenzaField.value);
                  if (dataArrivoField && dataArrivoField.value && new Date(dataPartenzaField.value) <= new Date(dataArrivoField.value)) { // Confrontiamo le date dei campi
                     dataPartenzaField.style.borderColor = '#e74c3c';
                     isValid = false;
@@ -318,12 +296,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             provinciaSelect.disabled = true;
                             provinciaSelect.innerHTML = '<option value="">Prima seleziona la regione</option>';
                         }
+                         // Chiudi il form dopo l'invio riuscito
+                        formContainer.classList.remove('open');
+                        ospitalitaToggle.classList.remove('active');
                     }, function(error) {
                         // Questo codice viene eseguito se c'è un errore nell'invio
                         alert('Si è verificato un errore durante l\'invio della richiesta.');
                         console.log('Errore invio email:', error); // Logga l'errore nella console per debug
                     });
-
             } else {
                 // Questo codice viene eseguito se la validazione fallisce (nessun cambiamento qui)
                 alert('Si prega di compilare correttamente tutti i campi obbligatori.');
@@ -349,6 +329,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Nota: Il form "Iscriviti" (con id="contact-form" o simile) non è gestito qui per l'invio EmailJS.
     // Se volessi fare lo stesso anche per quello, dovresti replicare la logica.
+
+    // ---------- Nuova Funzionalità: Toggle Modulo Ospitalità ----------
+    const ospitalitaToggle = document.getElementById('ospitalitaToggle');
+    const formContainer = document.getElementById('formContainer');
+    const toggleArrow = ospitalitaToggle ? ospitalitaToggle.querySelector('.toggle-arrow') : null;
+
+    if (ospitalitaToggle && formContainer && toggleArrow) {
+        ospitalitaToggle.addEventListener('click', function() {
+            const isOpen = formContainer.classList.contains('open');
+
+            if (isOpen) {
+                // Chiudi il form
+                formContainer.classList.remove('open');
+                ospitalitaToggle.classList.remove('active'); // Rimuovi la classe per ruotare la freccia
+            } else {
+                // Apri il form
+                formContainer.classList.add('open');
+                ospitalitaToggle.classList.add('active'); // Aggiungi la classe per ruotare la freccia
+                // Opzionale: scrolla verso il form dopo averlo aperto
+                 formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+     // Assicurati che il form sia inizialmente chiuso al caricamento della pagina
+    if (formContainer) {
+        formContainer.classList.remove('open');
+    }
 
 
 });
