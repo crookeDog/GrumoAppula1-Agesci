@@ -973,18 +973,19 @@ button {
 .form-title {
     font-family: "Patrick Hand SC", cursive;
     font-size: 2.5rem;
-    color: #3A5A40;
+    color: white;
     text-align: center;
     margin-bottom: 2rem;
+    margin-top: 2.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-subtitle {
     font-family: "Patrick Hand SC", cursive;
     font-size: 1.2rem;
-    color: #588157;
+    color: white;
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     line-height: 1.6;
 }
 
@@ -1104,4 +1105,41 @@ button {
     color: #e74c3c;
     text-align: center;
     margin-bottom: 2rem;
+}
+
+/* Stili per il toggle e la freccia */
+.ospitalita-toggle {
+    cursor: pointer; /* Indica che l'elemento è cliccabile */
+    /* Puoi aggiungere qui altri stili per l'aspetto del blocco titolo/sottotitolo se necessario */
+}
+
+.form-title {
+    display: flex; /* Permette di allineare titolo e freccia */
+    align-items: center;
+    justify-content: center; /* Centra il contenuto */
+    gap: 10px; /* Spazio tra titolo e freccia */
+}
+
+.toggle-arrow {
+    display: inline-block; /* Permette la trasformazione */
+    transition: transform 0.3s ease; /* Transizione per la rotazione */
+    font-size: 1.5rem; /* Dimensione della freccia */
+    color: white; /* Colore della freccia */
+}
+
+.ospitalita-toggle.active .toggle-arrow {
+    transform: rotate(180deg); /* Ruota la freccia verso l'alto quando attivo */
+}
+
+/* Stili per il contenitore del form per l'effetto a tendina */
+#formContainer {
+    max-height: 0; /* Nasconde il contenuto per default */
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; /* Transizione per l'effetto a tendina */
+}
+
+/* Classe per mostrare il contenitore del form */
+#formContainer.open {
+    max-height: 1500px; /* Un valore sufficientemente grande per mostrare tutto il contenuto */
+    /* Potresti dover aggiustare questo valore in base all'altezza massima possibile del tuo form */
 }
