@@ -128,23 +128,29 @@
                         <h3 class="map-title">
                             📍 Dove si trova la nostra Base Scout
                         </h3>
+                        <!-- Se avevi un indirizzo qui, puoi riaggiungerlo -->
+                        <!-- <p class="map-address">Via Placeholder 123, Grumo Appula (BA)</p> -->
                     </div>
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d435.5304788282896!2d16.707957897175053!3d41.007435257528655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1749481265741!5m2!1sit!2sit" 
-                
-                        allowfullscreen="" 
-                        loading="lazy" 
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1182.7955453305894!2d16.75030518543864!3d40.96194175393242!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sit!2sit!4v1749586744402!5m2!1sit!2sit"
+                        allowfullscreen=""
+                        loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
-                <div class="section-content">
+
+                <!-- Elemento per il toggle del form con ID ospitalitaToggle -->
+                <div class="ospitalita-toggle" id="ospitalitaToggle">
+                    <h3 class="form-title">Richiesta Ospitalità <span class="toggle-arrow">&#9660;</span></h3>
+                    <p class="form-subtitle">
+                        Compila il modulo per richiedere l'ospitalità presso la nostra base scout. Saremo felici di accogliere il vostro gruppo!
+                    </p>
+                </div>
+
+                <!-- Contenitore del form da mostrare/nascondere con ID formContainer -->
+                <div id="formContainer">
                     <form class="ospitalita-form" id="ospitalitaForm" novalidate>
-                        <h3 class="form-title">Richiesta Ospitalità</h3>
-                        <p class="form-subtitle">
-                            Compila il modulo per richiedere l'ospitalità presso la nostra base scout. Saremo felici di accogliere il vostro gruppo!
-                        </p>
                         <p class="required-note">I campi contrassegnati con * sono obbligatori</p>
-        
                         <div class="form-group">
                             <label for="associazione" class="form-label required">La vostra associazione</label>
                             <select id="associazione" name="associazione" class="form-select" required>
@@ -157,13 +163,11 @@
                                 <option value="Nessuna">Nessuna associazione nazionale di riferimento</option>
                             </select>
                         </div>
-        
                         <div class="form-group">
                             <label for="nomeGruppo" class="form-label required">Il nome del vostro gruppo</label>
-                            <input type="text" id="nomeGruppo" name="nomeGruppo" class="form-input" required 
+                            <input type="text" id="nomeGruppo" name="nomeGruppo" class="form-input" required
                                    placeholder="Es. Gruppo Scout Milano 5">
                         </div>
-        
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="regione" class="form-label required">Regione</label>
@@ -198,39 +202,35 @@
                                 </select>
                             </div>
                         </div>
-        
                         <div class="form-group">
                             <label for="nomeResponsabile" class="form-label required">Nome e cognome responsabile</label>
-                            <input type="text" id="nomeResponsabile" name="nomeResponsabile" class="form-input" required 
+                            <input type="text" id="nomeResponsabile" name="nomeResponsabile" class="form-input" required
                                    placeholder="Nome e cognome del responsabile del gruppo">
                         </div>
-        
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="cellulare" class="form-label required">Cellulare responsabile</label>
-                                <input type="tel" id="cellulare" name="cellulare" class="form-input" required 
+                                <input type="tel" id="cellulare" name="cellulare" class="form-input" required
                                        placeholder="Es. 3331234567">
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label required">Email responsabile</label>
-                                <input type="email" id="email" name="email" class="form-input" required 
+                                <input type="email" id="email" name="email" class="form-input" required
                                        placeholder="responsabile@esempio.it">
                             </div>
                         </div>
-        
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="numeroRagazzi" class="form-label required">Numero ragazzi</label>
-                                <input type="number" id="numeroRagazzi" name="numeroRagazzi" class="form-input" 
+                                <input type="number" id="numeroRagazzi" name="numeroRagazzi" class="form-input"
                                        min="0" required placeholder="0">
                             </div>
                             <div class="form-group">
                                 <label for="numeroAccompagnatori" class="form-label required">Numero accompagnatori</label>
-                                <input type="number" id="numeroAccompagnatori" name="numeroAccompagnatori" class="form-input" 
+                                <input type="number" id="numeroAccompagnatori" name="numeroAccompagnatori" class="form-input"
                                        min="0" required placeholder="0">
                             </div>
                         </div>
-        
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="dataArrivo" class="form-label required">Data e orario di arrivo</label>
@@ -241,20 +241,18 @@
                                 <input type="datetime-local" id="dataPartenza" name="dataPartenza" class="form-input" required>
                             </div>
                         </div>
-        
                         <div class="form-group">
                             <label for="descrizione" class="form-label">Raccontateci qualcosa di voi…</label>
-                            <textarea id="descrizione" name="descrizione" class="form-textarea" rows="4" 
+                            <textarea id="descrizione" name="descrizione" class="form-textarea" rows="4"
                                       placeholder="Raccontateci qualcosa del vostro gruppo, delle vostre tradizioni o delle attività che vorreste fare durante la vostra permanenza..."></textarea>
                         </div>
-        
                         <button type="submit" class="form-submit">Invia Richiesta</button>
-                        
                         <p class="form-note">
                             La vostra richiesta verrà esaminata e riceverete una risposta entro 48 ore.
                         </p>
-                    </form>   
+                    </form>
                 </div>
+            </div>
         </section>
 
         <section class="content-section" id="sede">
