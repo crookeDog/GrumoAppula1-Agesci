@@ -21,7 +21,7 @@
                     <a href="#home"><b>Home</b></a>
                     <a href="#chi-siamo"><b>Chi siamo</b></a>
                     <a href="#unita"><b>Le unità</b></a>
-                    <a href="#galleria"><b>Galleria</b></a>
+                    <a href="#Ospitalità"><b>Ospitalità</b></a>
                     <a href="#sede"><b>Sede</b></a>
                     <a href="#iscriviti"><b>Iscriviti!</b></a>
                 </div>
@@ -38,7 +38,7 @@
         <a href="#home" onclick="toggleMenu()"><b>Home</b></a>
         <a href="#chi-siamo" onclick="toggleMenu()"><b>Chi siamo</b></a>
         <a href="#unita" onclick="toggleMenu()"><b>Le unità</b></a>
-        <a href="#galleria" onclick="toggleMenu()"><b>Galleria</b></a>
+        <a href="#Ospitalità" onclick="toggleMenu()"><b>Ospitalità</b></a>
         <a href="#sede" onclick="toggleMenu()"><b>Sede</b></a>
         <a href="#iscriviti" onclick="toggleMenu()"><b>Iscriviti!</b></a>
     </nav>
@@ -117,22 +117,144 @@
             </div>
         </section>
 
-        <section class="content-section" id="galleria">
+        <section class="content-section" id="Ospitalità">
             <div class="section-content">
-                <h2 class="section-title">I Nostri Momenti</h2>
+                <h2 class="section-title">Ospitalità</h2>
                 <p class="section-text">
-                    Uno sguardo alle avventure, ai sorrisi e alle attività che caratterizzano la vita del nostro gruppo. Ogni foto racconta una storia di crescita, amicizia e scoperta.
+                    Spinti dal desiderio di condividere la bellezza del cammino scout, vogliamo aprire la nostra base a gruppi scout di tutto il mondo, per vivere insieme momenti di fraternità, scambio culturale e servizio. Crediamo che l'incontro tra diverse esperienze arricchisca il percorso di ciascuno, rafforzando i valori che ci uniscono.
                 </p>
-                <div class="gallery-grid">
-                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/A3B18A/001f1f?text=Avventura+1" alt="Foto attività scout 1"></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/588157/FFFFFF?text=Campo+Estivo" alt="Foto attività scout 2"></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/3A5A40/FFFFFF?text=Servizio" alt="Foto attività scout 3"></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/DAD7CD/344E41?text=Fuoco+Sera" alt="Foto attività scout 4"></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/889678/FFFFFF?text=Giochi" alt="Foto attività scout 5"></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/300x300/607164/FFFFFF?text=Insieme" alt="Foto attività scout 6"></div>
+                <div class="map-container">
+                    <div class="map-overlay">
+                        <h3 class="map-title">
+                            📍 Dove si trova la nostra Base Scout
+                        </h3>
+                    </div>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d435.5304788282896!2d16.707957897175053!3d41.007435257528655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1749481265741!5m2!1sit!2sit" 
+                
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
-                <p class="section-text" style="margin-top: 2rem;">Questi sono solo esempi. Ricorda di sostituire i link placeholder con le tue foto oppure carica le tue immagini nella cartella `/images/` e aggiorna i percorsi `src`.</p>
-            </div>
+                <div class="section-content">
+                    <form class="ospitalita-form" id="ospitalitaForm" novalidate>
+                        <h3 class="form-title">Richiesta Ospitalità</h3>
+                        <p class="form-subtitle">
+                            Compila il modulo per richiedere l'ospitalità presso la nostra base scout. Saremo felici di accogliere il vostro gruppo!
+                        </p>
+                        <p class="required-note">I campi contrassegnati con * sono obbligatori</p>
+        
+                        <div class="form-group">
+                            <label for="associazione" class="form-label required">La vostra associazione</label>
+                            <select id="associazione" name="associazione" class="form-select" required>
+                                <option value="">Seleziona la tua associazione</option>
+                                <option value="AGESCI">AGESCI</option>
+                                <option value="FSE">FSE</option>
+                                <option value="CNGEI">CNGEI</option>
+                                <option value="ASSORAIDER">ASSORAIDER</option>
+                                <option value="ACR">ACR</option>
+                                <option value="Nessuna">Nessuna associazione nazionale di riferimento</option>
+                            </select>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="nomeGruppo" class="form-label required">Il nome del vostro gruppo</label>
+                            <input type="text" id="nomeGruppo" name="nomeGruppo" class="form-input" required 
+                                   placeholder="Es. Gruppo Scout Milano 5">
+                        </div>
+        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regione" class="form-label required">Regione</label>
+                                <select id="regione" name="regione" class="form-select" required>
+                                    <option value="">Seleziona regione</option>
+                                    <option value="Abruzzo">Abruzzo</option>
+                                    <option value="Basilicata">Basilicata</option>
+                                    <option value="Calabria">Calabria</option>
+                                    <option value="Campania">Campania</option>
+                                    <option value="Emilia-Romagna">Emilia-Romagna</option>
+                                    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
+                                    <option value="Lazio">Lazio</option>
+                                    <option value="Liguria">Liguria</option>
+                                    <option value="Lombardia">Lombardia</option>
+                                    <option value="Marche">Marche</option>
+                                    <option value="Molise">Molise</option>
+                                    <option value="Piemonte">Piemonte</option>
+                                    <option value="Puglia">Puglia</option>
+                                    <option value="Sardegna">Sardegna</option>
+                                    <option value="Sicilia">Sicilia</option>
+                                    <option value="Toscana">Toscana</option>
+                                    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+                                    <option value="Umbria">Umbria</option>
+                                    <option value="Valle d'Aosta">Valle d'Aosta</option>
+                                    <option value="Veneto">Veneto</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="provincia" class="form-label required">Provincia</label>
+                                <select id="provincia" name="provincia" class="form-select" required disabled>
+                                    <option value="">Prima seleziona la regione</option>
+                                </select>
+                            </div>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="nomeResponsabile" class="form-label required">Nome e cognome responsabile</label>
+                            <input type="text" id="nomeResponsabile" name="nomeResponsabile" class="form-input" required 
+                                   placeholder="Nome e cognome del responsabile del gruppo">
+                        </div>
+        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cellulare" class="form-label required">Cellulare responsabile</label>
+                                <input type="tel" id="cellulare" name="cellulare" class="form-input" required 
+                                       placeholder="Es. 3331234567">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label required">Email responsabile</label>
+                                <input type="email" id="email" name="email" class="form-input" required 
+                                       placeholder="responsabile@esempio.it">
+                            </div>
+                        </div>
+        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="numeroRagazzi" class="form-label required">Numero ragazzi</label>
+                                <input type="number" id="numeroRagazzi" name="numeroRagazzi" class="form-input" 
+                                       min="0" required placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="numeroAccompagnatori" class="form-label required">Numero accompagnatori</label>
+                                <input type="number" id="numeroAccompagnatori" name="numeroAccompagnatori" class="form-input" 
+                                       min="0" required placeholder="0">
+                            </div>
+                        </div>
+        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dataArrivo" class="form-label required">Data e orario di arrivo</label>
+                                <input type="datetime-local" id="dataArrivo" name="dataArrivo" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dataPartenza" class="form-label required">Data e orario di ripartenza</label>
+                                <input type="datetime-local" id="dataPartenza" name="dataPartenza" class="form-input" required>
+                            </div>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="descrizione" class="form-label">Raccontateci qualcosa di voi…</label>
+                            <textarea id="descrizione" name="descrizione" class="form-textarea" rows="4" 
+                                      placeholder="Raccontateci qualcosa del vostro gruppo, delle vostre tradizioni o delle attività che vorreste fare durante la vostra permanenza..."></textarea>
+                        </div>
+        
+                        <button type="submit" class="form-submit">Invia Richiesta</button>
+                        
+                        <p class="form-note">
+                            La vostra richiesta verrà esaminata e riceverete una risposta entro 48 ore.
+                        </p>
+                    </form>   
+                </div>
         </section>
 
         <section class="content-section" id="sede">
@@ -184,7 +306,16 @@
     </footer>
 
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()"></button>
-    
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: "nYDOPQ5VAro73SKbL",
+        });
+    })();
+    </script>
     <script src="js/script.js" defer></script>
 </body>
 </html>
