@@ -284,17 +284,58 @@
             <div class="section-content">
                 <h2 class="section-title">Unisciti a Noi!</h2>
                 <p class="section-text">
-                    Vuoi far parte della nostra famiglia scout? Le iscrizioni sono aperte quasi tutto l'anno! Contattaci per 
-                    conoscere meglio il nostro metodo educativo e scoprire come tuo figlio o tua figlia può crescere attraverso 
+                    Vuoi far parte della nostra famiglia scout? Le iscrizioni sono aperte quasi tutto l'anno! Contattaci per
+                    conoscere meglio il nostro metodo educativo e scoprire come tuo figlio o tua figlia può crescere attraverso
                     il gioco, l'avventura e il servizio. Compila il modulo sottostante o vieni a trovarci in sede!
                 </p>
-                <form class="contact-form" action="#" method="POST"> <input type="text" name="name" placeholder="Il tuo Nome (o del genitore)" required>
-                    <input type="email" name="email" placeholder="La tua Email di contatto" required>
-                    <input type="text" name="subject" placeholder="Oggetto (es. Info Iscrizione)" required>
-                    <textarea name="message" placeholder="Il tuo Messaggio..." rows="5" required></textarea>
-                    <button type="submit" class="form-submit-btn">Invia Messaggio</button>
+        
+                <!-- Nuovo Form di Iscrizione -->
+                <form class="iscrizione-form" id="formIscrizione" novalidate>
+                    <h3 class="form-title">Modulo di Pre-Iscrizione</h3>
+                    <p class="required-note">I campi contrassegnati con * sono obbligatori</p>
+        
+                    <div class="form-group">
+                        <label for="nomeIscrizione" class="form-label required">Nome del ragazzo o della ragazza da iscrivere</label>
+                        <input type="text" id="nomeIscrizione" name="nomeIscrizione" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="cognomeIscrizione" class="form-label required">Cognome del ragazzo o della ragazza da iscrivere</label>
+                        <input type="text" id="cognomeIscrizione" name="cognomeIscrizione" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="dataNascitaIscrizione" class="form-label required">Data di nascita del ragazzo o della ragazza da iscrivere</label>
+                        <input type="date" id="dataNascitaIscrizione" name="dataNascitaIscrizione" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="emailGenitore" class="form-label required">Email del genitore o del tutore</label>
+                        <input type="email" id="emailGenitore" name="emailGenitore" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="telefonoGenitore" class="form-label required">Numero telefonico del genitore o del tutore</label>
+                        <input type="tel" id="telefonoGenitore" name="telefonoGenitore" class="form-input" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="sessoIscrizione" class="form-label required">Sesso del ragazzo o della ragazza da iscrivere</label>
+                        <select id="sessoIscrizione" name="sessoIscrizione" class="form-select" required>
+                            <option value="">Seleziona sesso</option>
+                            <option value="maschio">Maschio</option>
+                            <option value="femmina">Femmina</option>
+                            <option value="altro">Altro</option>
+                        </select>
+                    </div>
+        
+                    <button type="submit" class="form-submit">Invia Iscrizione</button>
+        
+                    <p class="form-note">
+                        La richiesta di iscrizione non garantisce l'accettazione immediata. Sarete contattati per i dettagli.
+                    </p>
                 </form>
-                <p class="form-note">Nota: L'invio di questo modulo è solo dimostrativo. Per renderlo funzionante, è necessaria una configurazione lato server o un servizio di terze parti.</p>
+        
             </div>
         </section>
     </main>
