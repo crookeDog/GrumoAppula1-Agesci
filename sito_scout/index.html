@@ -128,8 +128,6 @@
                         <h3 class="map-title">
                             📍 Dove si trova la nostra Base Scout
                         </h3>
-                        <!-- Se avevi un indirizzo qui, puoi riaggiungerlo -->
-                        <!-- <p class="map-address">Via Placeholder 123, Grumo Appula (BA)</p> -->
                     </div>
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1182.7955453305894!2d16.75030518543864!3d40.96194175393242!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sit!2sit!4v1749586744402!5m2!1sit!2sit"
@@ -138,119 +136,123 @@
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
-
-                <!-- Elemento per il toggle del form con ID ospitalitaToggle -->
-                <div class="ospitalita-toggle" id="ospitalitaToggle">
-                    <h3 class="form-title">Richiesta Ospitalità <span class="toggle-arrow">&#9660;</span></h3>
-                    <p class="form-subtitle">
-                        Compila il modulo per richiedere l'ospitalità presso la nostra base scout. Saremo felici di accogliere il vostro gruppo!
-                    </p>
-                </div>
-
-                <!-- Contenitore del form da mostrare/nascondere con ID formContainer -->
-                <div id="formContainer">
-                    <form class="ospitalita-form" id="ospitalitaForm" novalidate>
-                        <p class="required-note">I campi contrassegnati con * sono obbligatori</p>
-                        <div class="form-group">
-                            <label for="associazione" class="form-label required">La vostra associazione</label>
-                            <select id="associazione" name="associazione" class="form-select" required>
-                                <option value="">Seleziona la tua associazione</option>
-                                <option value="AGESCI">AGESCI</option>
-                                <option value="FSE">FSE</option>
-                                <option value="CNGEI">CNGEI</option>
-                                <option value="ASSORAIDER">ASSORAIDER</option>
-                                <option value="ACR">ACR</option>
-                                <option value="Nessuna">Nessuna associazione nazionale di riferimento</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomeGruppo" class="form-label required">Il nome del vostro gruppo</label>
-                            <input type="text" id="nomeGruppo" name="nomeGruppo" class="form-input" required
-                                   placeholder="Es. Gruppo Scout Milano 5">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="regione" class="form-label required">Regione</label>
-                                <select id="regione" name="regione" class="form-select" required>
-                                    <option value="">Seleziona regione</option>
-                                    <option value="Abruzzo">Abruzzo</option>
-                                    <option value="Basilicata">Basilicata</option>
-                                    <option value="Calabria">Calabria</option>
-                                    <option value="Campania">Campania</option>
-                                    <option value="Emilia-Romagna">Emilia-Romagna</option>
-                                    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
-                                    <option value="Lazio">Lazio</option>
-                                    <option value="Liguria">Liguria</option>
-                                    <option value="Lombardia">Lombardia</option>
-                                    <option value="Marche">Marche</option>
-                                    <option value="Molise">Molise</option>
-                                    <option value="Piemonte">Piemonte</option>
-                                    <option value="Puglia">Puglia</option>
-                                    <option value="Sardegna">Sardegna</option>
-                                    <option value="Sicilia">Sicilia</option>
-                                    <option value="Toscana">Toscana</option>
-                                    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
-                                    <option value="Umbria">Umbria</option>
-                                    <option value="Valle d'Aosta">Valle d'Aosta</option>
-                                    <option value="Veneto">Veneto</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="provincia" class="form-label required">Provincia</label>
-                                <select id="provincia" name="provincia" class="form-select" required disabled>
-                                    <option value="">Prima seleziona la regione</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomeResponsabile" class="form-label required">Nome e cognome responsabile</label>
-                            <input type="text" id="nomeResponsabile" name="nomeResponsabile" class="form-input" required
-                                   placeholder="Nome e cognome del responsabile del gruppo">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="cellulare" class="form-label required">Cellulare responsabile</label>
-                                <input type="tel" id="cellulare" name="cellulare" class="form-input" required
-                                       placeholder="Es. 3331234567">
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="form-label required">Email responsabile</label>
-                                <input type="email" id="email" name="email" class="form-input" required
-                                       placeholder="responsabile@esempio.it">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="numeroRagazzi" class="form-label required">Numero ragazzi</label>
-                                <input type="number" id="numeroRagazzi" name="numeroRagazzi" class="form-input"
-                                       min="0" required placeholder="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="numeroAccompagnatori" class="form-label required">Numero accompagnatori</label>
-                                <input type="number" id="numeroAccompagnatori" name="numeroAccompagnatori" class="form-input"
-                                       min="0" required placeholder="0">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="dataArrivo" class="form-label required">Data e orario di arrivo</label>
-                                <input type="datetime-local" id="dataArrivo" name="dataArrivo" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="dataPartenza" class="form-label required">Data e orario di ripartenza</label>
-                                <input type="datetime-local" id="dataPartenza" name="dataPartenza" class="form-input" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="descrizione" class="form-label">Raccontateci qualcosa di voi…</label>
-                            <textarea id="descrizione" name="descrizione" class="form-textarea" rows="4"
-                                      placeholder="Raccontateci qualcosa del vostro gruppo, delle vostre tradizioni o delle attività che vorreste fare durante la vostra permanenza..."></textarea>
-                        </div>
-                        <button type="submit" class="form-submit">Invia Richiesta</button>
-                        <p class="form-note">
-                            La vostra richiesta verrà esaminata e riceverete una risposta entro 48 ore.
+        
+                <!-- Nuovo contenitore principale per il form ospitalità -->
+                <div id="ospitalita-form" class="ospitalita-section-container">
+        
+                    <!-- Elemento per il toggle del form con ID ospitalitaToggle -->
+                    <div class="ospitalita-toggle" id="ospitalitaToggle">
+                        <h3 class="form-title">Richiesta Ospitalità <span class="toggle-arrow">&#9660;</span></h3>
+                        <p class="form-subtitle">
+                            Compila il modulo per richiedere l'ospitalità presso la nostra base scout. Saremo felici di accogliere il vostro gruppo!
                         </p>
-                    </form>
+                    </div>
+        
+                    <!-- Contenitore del form da mostrare/nascondere con ID formContainer -->
+                    <div id="formContainer">
+                        <form class="ospitalita-form" id="ospitalitaForm" novalidate>
+                            <p class="required-note">I campi contrassegnati con * sono obbligatori</p>
+                            <div class="form-group">
+                                <label for="associazione" class="form-label required">La vostra associazione</label>
+                                <select id="associazione" name="associazione" class="form-select" required>
+                                    <option value="">Seleziona la tua associazione</option>
+                                    <option value="AGESCI">AGESCI</option>
+                                    <option value="FSE">FSE</option>
+                                    <option value="CNGEI">CNGEI</option>
+                                    <option value="ASSORAIDER">ASSORAIDER</option>
+                                    <option value="ACR">ACR</option>
+                                    <option value="Nessuna">Nessuna associazione nazionale di riferimento</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nomeGruppo" class="form-label required">Il nome del vostro gruppo</label>
+                                <input type="text" id="nomeGruppo" name="nomeGruppo" class="form-input" required
+                                       placeholder="Es. Gruppo Scout Milano 5">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="regione" class="form-label required">Regione</label>
+                                    <select id="regione" name="regione" class="form-select" required>
+                                        <option value="">Seleziona regione</option>
+                                        <option value="Abruzzo">Abruzzo</option>
+                                        <option value="Basilicata">Basilicata</option>
+                                        <option value="Calabria">Calabria</option>
+                                        <option value="Campania">Campania</option>
+                                        <option value="Emilia-Romagna">Emilia-Romagna</option>
+                                        <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
+                                        <option value="Lazio">Lazio</option>
+                                        <option value="Liguria">Liguria</option>
+                                        <option value="Lombardia">Lombardia</option>
+                                        <option value="Marche">Marche</option>
+                                        <option value="Molise">Molise</option>
+                                        <option value="Piemonte">Piemonte</option>
+                                        <option value="Puglia">Puglia</option>
+                                        <option value="Sardegna">Sardegna</option>
+                                        <option value="Sicilia">Sicilia</option>
+                                        <option value="Toscana">Toscana</option>
+                                        <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+                                        <option value="Umbria">Umbria</option>
+                                        <option value="Valle d'Aosta">Valle d'Aosta</option>
+                                        <option value="Veneto">Veneto</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="provincia" class="form-label required">Provincia</label>
+                                    <select id="provincia" name="provincia" class="form-select" required disabled>
+                                        <option value="">Prima seleziona la regione</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nomeResponsabile" class="form-label required">Nome e cognome responsabile</label>
+                                <input type="text" id="nomeResponsabile" name="nomeResponsabile" class="form-input" required
+                                       placeholder="Nome e cognome del responsabile del gruppo">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cellulare" class="form-label required">Cellulare responsabile</label>
+                                    <input type="tel" id="cellulare" name="cellulare" class="form-input" required
+                                           placeholder="Es. 3331234567">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label required">Email responsabile</label>
+                                    <input type="email" id="email" name="email" class="form-input" required
+                                           placeholder="responsabile@esempio.it">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="numeroRagazzi" class="form-label required">Numero ragazzi</label>
+                                    <input type="number" id="numeroRagazzi" name="numeroRagazzi" class="form-input"
+                                           min="0" required placeholder="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="numeroAccompagnatori" class="form-label required">Numero accompagnatori</label>
+                                    <input type="number" id="numeroAccompagnatori" name="numeroAccompagnatori" class="form-input"
+                                           min="0" required placeholder="0">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dataArrivo" class="form-label required">Data e orario di arrivo</label>
+                                    <input type="datetime-local" id="dataArrivo" name="dataArrivo" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataPartenza" class="form-label required">Data e orario di ripartenza</label>
+                                    <input type="datetime-local" id="dataPartenza" name="dataPartenza" class="form-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="descrizione" class="form-label">Raccontateci qualcosa di voi…</label>
+                                <textarea id="descrizione" name="descrizione" class="form-textarea" rows="4"
+                                          placeholder="Raccontateci qualcosa del vostro gruppo, delle vostre tradizioni o delle attività che vorreste fare durante la vostra permanenza..."></textarea>
+                            </div>
+                            <button type="submit" class="form-submit">Invia Richiesta</button>
+                            <p class="form-note">
+                                La vostra richiesta verrà esaminata e riceverete una risposta entro 48 ore.
+                            </p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
