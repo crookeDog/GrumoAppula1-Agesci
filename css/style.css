@@ -1289,85 +1289,161 @@ button {
     }
 }
 
-.popup-overlay {
+.secret-popup {
     position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    bottom: 20px;
+    right: 20px; /* Cambiato da left: 50%; transform: translateX(-50%); a right: 20px; */
+    /* Rimosso il transform iniziale qui, sarà gestito dalle animazioni */
+    background: #3A5A40;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
     z-index: 1000;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-}
-
-.popup-overlay.hidden {
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    max-width: 320px;
+    width: 90%;
+    border: 2px solid #A3B18A;
+    box-sizing: border-box;
+    /* Stato iniziale nascosto: */
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+    /* La transizione 'none' era corretta per evitare interferenze con le animazioni */
 }
 
-.popup-content {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
+.secret-popup .popup-content {
     position: relative;
-    transform: scale(1);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
-
-.popup-overlay.hidden .popup-content {
-    transform: scale(0.8);
+.secret-popup .popup-image {
+    width: 90px; /* Dimensione leggermente più piccola per l'immagine */
+    height: 90px;
+    object-fit: contain;
+    margin-top: -45px; /* Spostala leggermente in alto per effetto "fuori dal bordo" */
+    margin-bottom: 10px;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
 }
-
-.popup-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
+.secret-popup .popup-message {
+    font-family: 'Patrick Hand SC', cursive;
+    font-size: 1.1rem; /* Dimensione testo leggermente più piccola */
+    line-height: 1.5;
+    margin-bottom: 10px;
+    color: #DAD7CD; /* Un tono più caldo per il testo */
+}
+.secret-popup .popup-button {
+    background: #A3B18A; /* Bottone verde oliva chiaro */
+    color: #3A5A40; /* Testo del bottone verde scuro */
     border: none;
-    font-size: 2.5rem;
-    color: #aaa;
-    cursor: pointer;
-    line-height: 1;
-    transition: color 0.2s ease;
-}
-
-.popup-close-btn:hover {
-    color: #333;
-}
-
-.popup-content h2 {
-    font-family: "Patrick Hand SC", cursive;
-    color: #3A5A40;
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-}
-
-.popup-content p {
-    font-family: "Quicksand", sans-serif;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-}
-
-.popup-button {
-    display: inline-block;
-    background: #3A5A40;
-    color: white;
-    font-family: "Patrick Hand SC", cursive;
-    text-decoration: none;
-    font-size: 1.3rem;
-    padding: 0.8rem 2.5rem;
+    padding: 12px 25px;
     border-radius: 50px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 1.0rem; /* Dimensione testo bottone */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.secret-popup .popup-button:hover {
+    background: #588157; /* Verde medio al hover */
+    color: white; /* Testo bianco al hover */
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+.secret-popup .popup-close {
+    position: absolute;
+    top: -10px; /* Posizionamento della X più vicino all'angolo */
+    right: -10px;
+    background: #588157; /* Sfondo della X verde medio */
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border: 2px solid #DAD7CD; /* Bordo chiaro per la X */
+}
+.secret-popup .popup-close:hover {
+    background: #A3B18A; /* Verde oliva al hover della X */
+    color: #3A5A40;
 }
 
-.popup-button:hover {
-    background: #588157;
-    transform: translateY(-2px);
+/* Keyframes per l'animazione di ingresso (fade-in e scorrimento da destra) */
+@keyframes popup-enter-animation {
+    from {
+        opacity: 0;
+        transform: translateX(100%); /* Parte da fuori schermo a destra */
+        visibility: hidden;
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0); /* Arriva nella posizione finale */
+        visibility: visible;
+    }
+}
+/* Keyframes per l'animazione di uscita (fade-out e scorrimento a destra) */
+@keyframes popup-exit-animation {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+        visibility: visible;
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%); /* Va fuori schermo a destra */
+        visibility: hidden;
+    }
+}
+
+.secret-popup.is-entering {
+    animation: popup-enter-animation 0.5s ease-out forwards;
+    pointer-events: auto;
+}
+.secret-popup.is-exiting {
+    animation: popup-exit-animation 0.5s ease-in forwards;
+    pointer-events: none;
+}
+/* Stato quando il pop-up è completamente visibile dopo l'animazione di ingresso */
+.secret-popup.is-active {
+    opacity: 1;
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Media queries per il pop-up */
+@media (max-width: 768px) {
+    .secret-popup {
+        padding: 20px;
+        max-width: 280px; /* Larghezza leggermente più piccola su mobile */
+        bottom: 15px; /* Meno distanza dal bordo su mobile */
+        right: 15px;
+    }
+    .secret-popup .popup-image {
+        width: 70px;
+        height: 70px;
+        margin-top: -35px;
+    }
+    .secret-popup .popup-message {
+        font-size: 1rem;
+    }
+    .secret-popup .popup-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .secret-popup .popup-close {
+        width: 24px;
+        height: 24px;
+        font-size: 1.2rem;
+        top: -8px;
+        right: -8px;
+    }
 }
