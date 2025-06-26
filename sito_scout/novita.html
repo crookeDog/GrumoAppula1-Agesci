@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bacheca Novità - Gruppo Scout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #3A5A40;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .bacheca-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .bacheca-title {
+            font-size: 3em;
+            color: #f5f7fa;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .bacheca-subtitle {
+            font-size: 1.3em;
+            color: #f5f7fa;
+            font-style: italic;
+        }
+
+        .bacheca-board {
+            background: #8B4513;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bacheca-board::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.3) 2px, rgba(139, 69, 19, 0.3) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 69, 19, 0.3) 2px, rgba(139, 69, 19, 0.3) 4px);
+            pointer-events: none;
+        }
+
+        .bacheca-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .post-it {
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-it.lupetti {
+            background: #FFD700;
+            transform: rotate(1deg);
+        }
+        .post-it.esploratori {
+            background: #4CAF50;
+            transform: rotate(-1deg);
+        }
+        .post-it.rover {
+            background: #F44336;
+            transform: rotate(2deg);
+        }
+        .post-it.co-ca {
+            background: #9C27B0;
+            transform: rotate(-3deg);
+        }
+
+        .post-it:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+        }
+
+        .post-it::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 20px;
+            background: #fff;
+            opacity: 0.7;
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .post-categoria {
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: rgba(0,0,0,0.6);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .post-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c2c2c;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .post-date {
+            font-size: 0.9em;
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .post-content {
+            flex-grow: 1;
+            font-size: 0.95em;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .post-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            opacity: 0.7;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-tab {
+            background: #2c5530;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .filter-tab:hover::before {
+            left: 100%;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: #4a7c59;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            color: #2c5530;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modal-date {
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .modal-text {
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .bacheca-title {
+                font-size: 2.2em;
+            }
+
+            .bacheca-board {
+                padding: 20px;
+            }
+
+            .bacheca-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .post-it {
+                min-height: 180px;
+                padding: 15px;
+            }
+
+            .filter-tabs {
+                justify-content: center;
+            }
+
+            .filter-tab {
+                padding: 10px 18px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bacheca-header">
+            <h1 class="bacheca-title">📌 Bacheca Novità</h1>
+            <p class="bacheca-subtitle">Tutte le ultime notizie del nostro gruppo scout</p>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">Tutte</button>
+            <button class="filter-tab" data-filter="lupetti">Lupetti 🐺</button>
+            <button class="filter-tab" data-filter="esploratori">Esploratori ⛰️</button>
+            <button class="filter-tab" data-filter="rover">Rover 🚐</button>
+            <button class="filter-tab" data-filter="co-ca">Co.Ca. 🏕️</button>
+        </div>
+
+        <div class="bacheca-board">
+            <div class="bacheca-grid" id="bachecaGrid">
+                </div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <h3>Nessuna novità trovata</h3>
+                <p>Non ci sono novità per la categoria selezionata</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-date" id="modalDate"></div>
+            <div class="modal-text" id="modalText"></div>
+        </div>
+    </div>
+
+    <script>
+        const novitaData = [
+            {
+                id: 1,
+                categoria: "esploratori",
+                titolo: "Uscita al Lago di Como",
+                data: "15 Giugno 2025",
+                riassunto: "Una fantastica giornata di escursionismo e attività acquatiche per tutti gli esploratori del gruppo.",
+                contenuto: "Domenica 15 giugno ci siamo ritrovati al Lago di Como per una giornata all'insegna dell'avventura. Abbiamo praticato canoa, fatto una lunga camminata sui sentieri panoramici e concluso con un momento di riflessione sulla riva del lago. La giornata è iniziata presto con il ritrovo alla stazione, dove l'entusiasmo era palpabile. Una volta arrivati, ci siamo divisi in squadre per le diverse attività. Il gruppo canoa ha imparato le tecniche base di pagaiata, mentre gli altri hanno esplorato i sentieri del lungolago. Il pranzo al sacco è stato consumato in una magnifica area picnic con vista mozzafiato. Nel pomeriggio abbiamo fatto giochi di squadra sulla spiaggia e concludo con una veglia al tramonto. Una giornata che rimarrà nel cuore di tutti i partecipanti!"
+            },
+            {
+                id: 2,
+                categoria: "co-ca",
+                titolo: "Campo Estivo 2025",
+                data: "10 Giugno 2025",
+                riassunto: "Tutte le informazioni per il campo estivo che si terrà dal 20 al 30 luglio in Val d'Aosta.",
+                contenuto: "Il campo estivo 2025 si terrà in Val d'Aosta dal 20 al 30 luglio presso il campo base di Courmayeur. Programma ricco di attività: trekking sui sentieri del Monte Bianco, giochi di squadra, serate intorno al fuoco e molto altro. Iscrizioni aperte fino al 1° luglio. Costo: 350€ comprensivo di vitto, alloggio e trasporti. Il programma dettagliato include: escursioni giornaliere sui sentieri della zona, attività di orienteering, costruzione di bivacchi, tecniche di campismo, serate a tema e tanto divertimento. È richiesta una preparazione fisica minima e l'equipaggiamento scout completo. Per informazioni dettagliate contattare i capi."
+            },
+            {
+                id: 3,
+                categoria: "lupetti",
+                titolo: "Cerimonia Promesse Lupetti",
+                data: "8 Giugno 2025",
+                riassunto: "Sabato scorso i nostri lupetti hanno pronunciato le loro prime promesse scout in una cerimonia molto emozionante.",
+                contenuto: "Una cerimonia davvero speciale quella di sabato 8 giugno nella sede del gruppo. I nostri lupetti, dopo mesi di preparazione e impegno, hanno pronunciato la loro promessa scout davanti alle famiglie e a tutto il gruppo. La cerimonia è iniziata con l'alzabandiera e il canto dell'inno scout. Ogni lupetto ha raccontato il proprio percorso e cosa significhi per lui essere scout. Le promesse sono state pronunciate una ad una, con grande emozione di tutti i presenti. Al termine, consegna dei fazzolettoni e festa con le famiglie. Un momento di grande emozione che segna l'inizio del loro vero cammino scout. Congratulazioni ai nostri nuovi lupetti!"
+            },
+            {
+                id: 4,
+                categoria: "rover",
+                titolo: "Servizio alla Mensa Caritas",
+                data: "5 Giugno 2025",
+                riassunto: "I rover del gruppo hanno prestato servizio presso la mensa Caritas, vivendo un'esperienza di crescita e solidarietà.",
+                contenuto: "Mercoledì 5 giugno i nostri rover hanno vissuto un'intensa esperienza di servizio presso la mensa Caritas di Milano. La giornata è iniziata alle 9:00 con la preparazione degli alimenti e l'allestimento delle sale. Durante il servizio hanno avuto modo di incontrare tante persone e ascoltare le loro storie, comprendendo meglio le difficoltà che molti affrontano quotidianamente. L'esperienza ha lasciato un segno profondo in tutti i partecipanti, che hanno riscoperto il valore del servizio disinteressato e dell'accoglienza. È previsto un incontro di verifica per condividere riflessioni e programmare altre iniziative simili."
+            },
+            {
+                id: 5,
+                categoria: "co-ca",
+                titolo: "Assemblea di Gruppo",
+                data: "2 Giugno 2025",
+                riassunto: "Si è tenuta l'assemblea annuale del gruppo con la presentazione delle attività e l'approvazione del bilancio.",
+                contenuto: "Domenica 2 giugno presso la sede si è svolta l'assemblea annuale del gruppo con la partecipazione di capi, genitori e ragazzi più grandi. Durante l'incontro sono state presentate tutte le attività svolte nell'ultimo anno, i progetti futuri e il bilancio economico. Grande soddisfazione per i risultati raggiunti e l'entusiasmo dimostrato da tutti i partecipanti. Approvato all'unanimità il programma per il prossimo anno che prevede numerose uscite, campi e iniziative di servizio. Ringraziamenti speciali ai genitori per il supporto costante e ai capi per la dedizione dimostrata."
+            },
+            {
+                id: 6,
+                categoria: "esploratori",
+                titolo: "Hike Notturno",
+                data: "30 Maggio 2025",
+                riassunto: "Gli esploratori hanno affrontato una challenging escursione notturna sui Colli Bergamaschi.",
+                contenuto: "Nella notte tra venerdì 30 maggio e sabato 1° giugno, gli esploratori hanno affrontato un'impegnativa escursione notturna sui Colli Bergamaschi. Partenza alle 22:00 dalla sede con zaini carichi e spirito di avventura. Il percorso di 15 km ha attraversato sentieri boscosi illuminati solo dalle torce frontali. Durante la camminata sono state messe alla prova le capacità di orienteering e lavoro di squadra. All'alba, arrivo al rifugio dove ci aspettava una meritata colazione calda. L'esperienza ha rafforzato il gruppo e insegnato l'importanza della preparazione e della solidarietà tra compagni di avventura."
+            }
+        ];
+
+        let filtroAttivo = 'all';
+
+        function getIconaCategoria(categoria) {
+            const icone = {
+                'lupetti': '🐺',
+                'esploratori': '⛰️',
+                'rover': '🚐',
+                'co-ca': '⚜️'
+            };
+            return icone[categoria] || '📰';
+        }
+
+        function renderBacheca() {
+            const grid = document.getElementById('bachecaGrid');
+            const noResults = document.getElementById('noResults');
+            
+            let novitaFiltrate = novitaData;
+            if (filtroAttivo !== 'all') {
+                novitaFiltrate = novitaData.filter(novita => novita.categoria === filtroAttivo);
+            }
+
+            if (novitaFiltrate.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            novitaFiltrate.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            grid.innerHTML = novitaFiltrate.map(novita => `
+                <div class="post-it ${novita.categoria}" onclick="mostraNovita(${novita.id})">
+                    <div class="post-icon">${getIconaCategoria(novita.categoria)}</div>
+                    <div class="post-categoria">${novita.categoria}</div>
+                    <div class="post-title">${novita.titolo}</div>
+                    <div class="post-date">📅 ${novita.data}</div>
+                    <div class="post-content">${novita.riassunto}</div>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filtroAttivo = this.dataset.filter;
+                renderBacheca();
+            });
+        });
+
+        function mostraNovita(id) {
+            const novita = novitaData.find(n => n.id === id);
+            if (novita) {
+                document.getElementById('modalTitle').textContent = novita.titolo;
+                document.getElementById('modalDate').textContent = '📅 ' + novita.data;
+                document.getElementById('modalText').textContent = novita.contenuto;
+                document.getElementById('newsModal').style.display = 'block';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('newsModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('newsModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        renderBacheca();
+    </script>
+</body>
+</html>

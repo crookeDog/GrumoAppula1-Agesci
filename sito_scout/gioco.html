@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Runner - Pixel Adventure</title>
+    <link rel="stylesheet" href="css/style_game.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Nuovo contenitore per il contenuto scalabile del gioco -->
+        <div id="gameContentWrapper">
+            <canvas id="gameCanvas"></canvas>
+            <div class="mountains"></div>
+            <!-- Clouds -->
+            <div class="cloud-layer">
+                <div class="pixel-cloud" style="animation-delay: -1s; top: 15%;"></div>
+                <div class="pixel-cloud" style="animation-delay: -3s; top: 25%;"></div>
+                <div class="pixel-cloud" style="animation-delay: -6s; top: 10%;"></div>
+            </div>
+            <!-- Ground -->
+            <div class="ground"></div>
+            <!-- UI Elements -->
+            <div id="score">Score: 0</div>
+            <div id="highScore">Best: 0</div>
+            <div id="gameOver">
+                <div class="game-over-content">
+                    <h2>🌲 GAME OVER 🌲</h2>
+                    <p>Punteggio: <span id="finalScore">0</span></p>
+                    <p>Record: <span id="currentRecord">0</span></p>
+                    <p id="newRecord" style="display: none;">🏆 NUOVO RECORD! 🏆</p>
+                    <button id="restartBtn">🎮 RIPROVA</button>
+                </div>
+            </div>
+            <div id="instructions">
+                <div class="instruction-box">
+                    🎮 SPAZIO o ↑ per saltare<br>
+                    📱 Su mobile: tocca lo schermo
+                </div>
+            </div>
+            <div id="startScreen">
+                <div class="start-content">
+                    <h1>🌲 FOREST RUNNER 🌲</h1>
+                    <p>Corri nella foresta e salta gli ostacoli!</p>
+                    <div class="start-hint">Premi SPAZIO per iniziare</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+</html>
