@@ -89,8 +89,8 @@ function setupHospitalityForm() {
         if (cellulareField && cellulareField.value && !cellulareRegex.test(cellulareField.value.replace(/\s/g, ''))) {
             cellulareField.style.borderColor = '#e74c3c';
             isValid = false;
-        } else if (celluareField) {
-            celluareField.style.borderColor = '#A3B18A';
+        } else if (cellulareField) {
+            cellulareField.style.borderColor = '#A3B18A';
         }
 
         const dataArrivoField = document.getElementById('dataArrivo');
@@ -255,10 +255,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Pop-up segreto e minigioco
     const secretPopup = document.getElementById('secret-popup');
     const homeSection = document.getElementById('home');
-    const mainElement = document.querySelector('main');
-    const popupButton = secretPopup ? secretPopup.querySelector('.popup-button') : null;
-    const popupClose = secretPopup ? secretPopup.querySelector('.popup-close') : null;
+    // Non c'è bisogno di mainElement qui per la logica dei popup
+    const secretPopupButton = secretPopup ? secretPopup.querySelector('.popup-button') : null; // Cambiato nome
+    const secretPopupClose = secretPopup ? secretPopup.querySelector('.secret-popup-close') : null; // Cambiato nome e selettore
 
+    // Aggiunta per il News Pop-up
+    const newsPopup = document.getElementById('news-popup');
+    const closeNewsPopupBtn = document.getElementById('close-news-popup'); // AGGIORNATO L'ID QUI!
 
     // Funzione Toggle Menu Mobile
     function toggleMenu() {
@@ -333,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             // Opzionale: per rimuovere la classe 'visible' se si scrolla indietro
             // else {
-            //    section.classList.remove('visible');
+            //    section.classList.remove('visible');
             // }
         });
     });
@@ -463,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Logica Pop-up Segreto (Secret Popup) con Animazioni ---
 
     // Funzione per mostrare il pop-up con animazione
-    function showPopup() {
+    function showSecretPopup() { // Rinominate per evitare conflitti con il news popup
         if (!secretPopup || secretPopup.classList.contains('is-entering') || secretPopup.classList.contains('is-active')) {
             return; // Già in fase di ingresso o già attivo
         }
@@ -479,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Funzione per nascondere il pop-up con animazione
-    function hidePopup() {
+    function hideSecretPopup() { // Rinominate per evitare conflitti con il news popup
         if (!secretPopup || secretPopup.classList.contains('is-exiting') || (!secretPopup.classList.contains('is-active') && !secretPopup.classList.contains('is-entering'))) {
             return; // Già in fase di uscita, non attivo, o non in ingresso
         }
@@ -495,14 +498,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Funzione per controllare la visibilità della sezione "home" e agire sul pop-up
-    function checkAndTogglePopup() {
+    function checkAndToggleSecretPopup() { // Rinominate per specificità
         if (!secretPopup || !homeSection) {
             return;
         }
 
         // Se la sezione minigioco è già sbloccata, nascondi sempre il pop-up e non mostrarlo più
         if (document.getElementById('minigame-secret-section')) {
-            hidePopup();
+            hideSecretPopup();
             return;
         }
 
@@ -515,41 +518,84 @@ document.addEventListener('DOMContentLoaded', function() {
         );
 
         if (isHomeFullyVisible) {
-            showPopup();
+            showSecretPopup();
         } else {
-            hidePopup();
+            hideSecretPopup();
         }
     }
 
-    // Inizializza il pop-up come nascosto all'avvio
+    // Inizializza il pop-up segreto come nascosto all'avvio
     if (secretPopup) {
         secretPopup.classList.add('is-hidden');
     }
 
     // Event listener per i bottoni del pop-up segreto
-    if (popupButton) {
-        popupButton.addEventListener('click', function() {
-            hidePopup(); // Nasconde il pop-up con animazione
+    if (secretPopupButton) { // Usato il nuovo nome della variabile
+        secretPopupButton.addEventListener('click', function() {
+            hideSecretPopup(); // Nasconde il pop-up con animazione
         });
     }
-    if (popupClose) {
-        popupClose.addEventListener('click', function() {
-            hidePopup(); // Nasconde il pop-up con animazione
+    if (secretPopupClose) { // Usato il nuovo nome della variabile
+        secretPopupClose.addEventListener('click', function() {
+            hideSecretPopup(); // Nasconde il pop-up con animazione
         });
     }
 
-    // Esegui il controllo del pop-up all'avvio e durante scroll/resize
-    // Aggiunto un leggero ritardo iniziale per assicurare che il DOM sia completamente renderizzato
-    setTimeout(checkAndTogglePopup, 100);
-
+    // Esegui il controllo del pop-up segreto all'avvio e durante scroll/resize
     let scrollOrResizeTimeout;
     window.addEventListener('scroll', function() {
         clearTimeout(scrollOrResizeTimeout);
-        scrollOrResizeTimeout = setTimeout(checkAndTogglePopup, 100); // Debounce
+        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100); // Debounce
     });
     window.addEventListener('resize', function() {
         clearTimeout(scrollOrResizeTimeout);
-        scrollOrResizeTimeout = setTimeout(checkAndTogglePopup, 100); // Debounce
+        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100); // Debounce
     });
 
+    // --- Logica Pop-up Novità (News Popup) ---
+
+    // Funzione per mostrare il news popup
+    function showNewsPopup() {
+        // Controllo se il popup è già visibile o in fase di animazione per evitare problemi
+        if (!newsPopup || newsPopup.classList.contains('is-active') || newsPopup.classList.contains('is-entering')) {
+            return;
+        }
+
+        // Rimuovi la classe 'hidden' per iniziare la transizione
+        newsPopup.classList.remove('hidden');
+        // Aggiungi la classe 'is-active' per attivare gli stili di visibilità e animazione
+        newsPopup.classList.add('is-active');
+
+        // Blocca lo scroll del body quando il popup è attivo
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Funzione per nascondere il news popup
+    function hideNewsPopup() {
+        if (!newsPopup || newsPopup.classList.contains('hidden') || newsPopup.classList.contains('is-exiting')) {
+            return;
+        }
+
+        // Rimuovi la classe 'is-active' per avviare l'animazione di uscita
+        newsPopup.classList.remove('is-active');
+
+        // Aggiungi un listener per la fine della transizione
+        newsPopup.addEventListener('transitionend', function handler() {
+            // Aggiungi la classe 'hidden' solo dopo che l'animazione di uscita è completa
+            newsPopup.classList.add('hidden');
+            // Rimuovi l'event listener per evitare esecuzioni multiple
+            newsPopup.removeEventListener('transitionend', handler);
+            // Ripristina lo scroll del body
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Mostra il news popup quando il DOM è completamente caricato
+    // Utilizziamo un setTimeout per un leggero ritardo, evitando problemi di rendering iniziali
+    setTimeout(showNewsPopup, 500); // Mostra dopo 0.5 secondi
+
+    // Chiudi il news popup quando si clicca il bottone di chiusura
+    if (closeNewsPopupBtn) {
+        closeNewsPopupBtn.addEventListener('click', hideNewsPopup);
+    }
 });

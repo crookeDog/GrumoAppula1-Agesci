@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bacheca Novità - Gruppo Scout</title>
+    <link rel="icon" href="/images/AGESCI.png" type="image/x-icon">
+
+
     <style>
         * {
             margin: 0;
@@ -34,7 +38,7 @@
             font-size: 3em;
             color: #f5f7fa;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .bacheca-subtitle {
@@ -47,7 +51,7 @@
             background: #8B4513;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -59,7 +63,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.3) 2px, rgba(139, 69, 19, 0.3) 4px),
                 repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 69, 19, 0.3) 2px, rgba(139, 69, 19, 0.3) 4px);
             pointer-events: none;
@@ -76,7 +80,7 @@
         .post-it {
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
             transform: rotate(-2deg);
             transition: all 0.3s ease;
             position: relative;
@@ -90,14 +94,17 @@
             background: #FFD700;
             transform: rotate(1deg);
         }
+
         .post-it.esploratori {
             background: #4CAF50;
             transform: rotate(-1deg);
         }
+
         .post-it.rover {
             background: #F44336;
             transform: rotate(2deg);
         }
+
         .post-it.co-ca {
             background: #9C27B0;
             transform: rotate(-3deg);
@@ -106,7 +113,7 @@
         .post-it:hover {
             transform: rotate(0deg) scale(1.05);
             z-index: 10;
-            box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
         }
 
         .post-it::before {
@@ -120,14 +127,14 @@
             background: #fff;
             opacity: 0.7;
             border-radius: 2px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .post-categoria {
             font-size: 0.8em;
             font-weight: bold;
             text-transform: uppercase;
-            color: rgba(0,0,0,0.6);
+            color: rgba(0, 0, 0, 0.6);
             margin-bottom: 8px;
             letter-spacing: 1px;
         }
@@ -142,7 +149,7 @@
 
         .post-date {
             font-size: 0.9em;
-            color: rgba(0,0,0,0.5);
+            color: rgba(0, 0, 0, 0.5);
             margin-bottom: 12px;
             font-style: italic;
         }
@@ -190,7 +197,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -198,10 +205,11 @@
             left: 100%;
         }
 
-        .filter-tab:hover, .filter-tab.active {
+        .filter-tab:hover,
+        .filter-tab.active {
             background: #4a7c59;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .modal {
@@ -212,7 +220,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
         }
 
@@ -225,7 +233,7 @@
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             position: relative;
         }
 
@@ -265,7 +273,7 @@
             text-align: center;
             padding: 50px 20px;
             color: #666;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             margin: 20px;
         }
@@ -300,6 +308,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="bacheca-header">
@@ -317,7 +326,7 @@
 
         <div class="bacheca-board">
             <div class="bacheca-grid" id="bachecaGrid">
-                </div>
+            </div>
             <div class="no-results" id="noResults" style="display: none;">
                 <h3>Nessuna novità trovata</h3>
                 <p>Non ci sono novità per la categoria selezionata</p>
@@ -401,7 +410,7 @@
         function renderBacheca() {
             const grid = document.getElementById('bachecaGrid');
             const noResults = document.getElementById('noResults');
-            
+
             let novitaFiltrate = novitaData;
             if (filtroAttivo !== 'all') {
                 novitaFiltrate = novitaData.filter(novita => novita.categoria === filtroAttivo);
@@ -430,7 +439,7 @@
         }
 
         document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
+            tab.addEventListener('click', function () {
                 document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
                 filtroAttivo = this.dataset.filter;
@@ -452,7 +461,7 @@
             document.getElementById('newsModal').style.display = 'none';
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('newsModal');
             if (event.target == modal) {
                 closeModal();
@@ -462,4 +471,5 @@
         renderBacheca();
     </script>
 </body>
+
 </html>
