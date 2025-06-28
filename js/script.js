@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Variabile per tracciare se il secretPopup è stato nascosto dal menu mobile
     let secretPopupHiddenByMenu = false;
-    // MODIFICA QUI: Aggiungi questa variabile per tracciare se il popup è già apparso per la prima volta
+    // Variabile per tracciare se il popup è già apparso per la prima volta
     let hasSecretPopupAppearedOnce = false;
 
 
@@ -284,13 +284,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else { // Menu sta per chiudersi
                     if (secretPopupHiddenByMenu) {
                         secretPopupHiddenByMenu = false; // Resetta il flag
-                        // MODIFICA QUI: Quando il menu si chiude, se il popup era stato nascosto da esso
-                        // e siamo sulla home, mostralo. Altrimenti, la logica di scroll lo nasconderà.
                         const rect = homeSection.getBoundingClientRect();
                         if (rect.top === 0) { // Siamo sulla home all'inizio
                              showSecretPopup();
                         } else {
-                             // Se non siamo sulla home, assicurati che sia nascosto
                              hideSecretPopup();
                         }
                     }
@@ -367,7 +364,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!mobileNav.classList.contains('active')) {
             checkAndToggleSecretPopup();
         } else {
-             // Se il menu è attivo, il popup deve rimanere nascosto (o già nascosto)
              hideSecretPopup();
         }
     });
@@ -390,8 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (targetId === '#home') {
                     secretPopupHiddenByMenu = false; // Reset del flag quando si torna alla home
-                    // MODIFICA QUI: Mostra il popup immediatamente se si clicca per tornare alla home
-                    // e il menu mobile non è attivo.
                     if (!mobileNav.classList.contains('active')) {
                         showSecretPopup();
                     } else {
@@ -510,7 +504,6 @@ document.addEventListener('DOMContentLoaded', function() {
             secretPopup.classList.remove('is-entering');
             secretPopup.classList.add('is-active');
             secretPopup.onanimationend = null;
-            // MODIFICA QUI: Imposta a true quando il popup viene effettivamente mostrato
             hasSecretPopupAppearedOnce = true;
         }, {
             once: true
@@ -546,12 +539,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const rect = homeSection.getBoundingClientRect();
-        // MODIFICA QUI: Condizione più semplice e robusta per la visibilità su mobile
-        // Considera la home visibile se la sua parte superiore è nel viewport (anche se scrollata)
-        // e la sua parte inferiore non è completamente fuori dallo schermo in alto.
-        const isHomeVisibleForPopup = rect.top < (window.innerHeight || document.documentElement.clientHeight) && rect.bottom > 0;
 
-        if (isHomeVisibleForPopup && !secretPopupHiddenByMenu) {
+        // MODIFICA QUI: Condizione per rendere il popup visibile solo quando la home è l'unica sezione visibile
+        // e non è stata scrollata significativamente.
+        // Il popup è visibile se:
+        // 1. La parte superiore della homeSection è quasi all'inizio del viewport (o leggermente oltre il top, per fluttuazioni).
+        // 2. La parte inferiore della homeSection è ancora nel viewport, o quasi.
+        // Questo significa che l'intera homeSection è sostanzialmente nel campo visivo dell'utente,
+        // senza che altre sezioni siano prepotentemente entrate.
+        const isHomeTheOnlySectionVisible = (
+            rect.top >= -50 && // La parte superiore della home è vicina allo 0 o poco sopra
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 50 // La parte inferiore della home è vicina al bottom del viewport o poco sotto
+        );
+
+
+        if (isHomeTheOnlySectionVisible && !secretPopupHiddenByMenu) {
             showSecretPopup();
         } else {
             hideSecretPopup();
@@ -589,32 +591,24 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
     });
 
-    // MODIFICA QUI: Questo è il punto chiave per la comparsa iniziale su mobile.
-    // Forza la comparsa del popup dopo un breve ritardo all'evento DOMContentLoaded,
-    // se non è già apparso e siamo su mobile, e non è stato nascosto dal menu.
-    // Usiamo DOMContentLoaded per agire prima di `load` per un'esperienza più reattiva.
+    // Questo listener garantisce la comparsa iniziale su mobile
     window.addEventListener('DOMContentLoaded', function() {
-        // Controlla che il popup non sia già apparso e siamo su mobile (o comunque su schermi piccoli)
         if (!hasSecretPopupAppearedOnce && window.innerWidth <= 768) {
-            // Diamo un piccolissimo ritardo per consentire al browser di stabilizzare il layout
             setTimeout(() => {
-                // Esegui il controllo di visibilità dopo un breve ritardo, se il popup non è nascosto dal menu
-                if (!secretPopupHiddenByMenu) {
-                    checkAndToggleSecretPopup();
+                const rect = homeSection.getBoundingClientRect();
+                // MODIFICA QUI: La condizione di apparizione iniziale deve essere stretta
+                // per assicurare che appaia solo quando la home è visibile per la prima volta.
+                if (rect.top === 0 && !secretPopupHiddenByMenu) {
+                    showSecretPopup();
                 }
-            }, 500); // 500ms di ritardo per la prima attivazione forzata
+            }, 500); // Ritardo per consentire al layout di stabilizzarsi
         }
     });
 
-    // La riga successiva `window.addEventListener('load', checkAndToggleSecretPopup);`
-    // può essere rimossa o mantenuta, ma con la nuova logica DOMContentLoaded+setTimeout,
-    // il suo impatto sarà minore o ridondante per la comparsa iniziale del popup segreto.
-    // La lascio per coerenza con il tuo codice precedente, ma il trigger principale sarà il DOMContentLoaded.
     window.addEventListener('load', checkAndToggleSecretPopup);
 
 
     // --- Logica Pop-up Novità (News Popup) ---
-    // Riabilitata per essere funzionale come da tuo codice originale
     function showNewsPopup() {
         if (!newsPopup || newsPopup.classList.contains('is-active') || newsPopup.classList.contains('is-entering')) {
             return;
