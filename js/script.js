@@ -260,6 +260,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Variabile per tracciare se il secretPopup è stato nascosto dal menu mobile
     let secretPopupHiddenByMenu = false;
+    // MODIFICA QUI: Aggiungi questa variabile per tracciare se il popup è già apparso per la prima volta
+    let hasSecretPopupAppearedOnce = false;
+
 
     // Funzione Toggle Menu Mobile
     function toggleMenu() {
@@ -270,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileNav.classList.toggle('active');
             body.classList.toggle('no-scroll', mobileNav.classList.contains('active'));
 
-            // Controlla se siamo su mobile (media query CSS display: none per nav-links)
             const isMobile = window.getComputedStyle(document.querySelector('.nav-links')).display === 'none';
 
             if (isMobile) {
@@ -281,9 +283,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } else { // Menu sta per chiudersi
                     if (secretPopupHiddenByMenu) {
-                        // Resetta il flag e ricontrolla la visibilità del popup
-                        secretPopupHiddenByMenu = false;
-                        checkAndToggleSecretPopup();
+                        secretPopupHiddenByMenu = false; // Resetta il flag
+                        // MODIFICA QUI: Quando il menu si chiude, se il popup era stato nascosto da esso
+                        // e siamo sulla home, mostralo. Altrimenti, la logica di scroll lo nasconderà.
+                        const rect = homeSection.getBoundingClientRect();
+                        if (rect.top === 0) { // Siamo sulla home all'inizio
+                             showSecretPopup();
+                        } else {
+                             // Se non siamo sulla home, assicurati che sia nascosto
+                             hideSecretPopup();
+                        }
                     }
                 }
             }
@@ -357,6 +366,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!mobileNav.classList.contains('active')) {
             checkAndToggleSecretPopup();
+        } else {
+             // Se il menu è attivo, il popup deve rimanere nascosto (o già nascosto)
+             hideSecretPopup();
         }
     });
 
@@ -376,10 +388,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
 
-                if (targetId === '#home' && secretPopupHiddenByMenu) {
-                    secretPopupHiddenByMenu = false;
-                    showSecretPopup();
-                } else if (targetId !== '#home') {
+                if (targetId === '#home') {
+                    secretPopupHiddenByMenu = false; // Reset del flag quando si torna alla home
+                    // MODIFICA QUI: Mostra il popup immediatamente se si clicca per tornare alla home
+                    // e il menu mobile non è attivo.
+                    if (!mobileNav.classList.contains('active')) {
+                        showSecretPopup();
+                    } else {
+                        hideSecretPopup();
+                    }
+                } else { // Se si va a un'altra sezione, nascondi il popup
                     hideSecretPopup();
                 }
             }
@@ -492,6 +510,8 @@ document.addEventListener('DOMContentLoaded', function() {
             secretPopup.classList.remove('is-entering');
             secretPopup.classList.add('is-active');
             secretPopup.onanimationend = null;
+            // MODIFICA QUI: Imposta a true quando il popup viene effettivamente mostrato
+            hasSecretPopupAppearedOnce = true;
         }, {
             once: true
         });
@@ -526,14 +546,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const rect = homeSection.getBoundingClientRect();
-        // Il pop-up appare quando la sezione home è completamente visibile all'utente.
-        const isHomeFullyVisible = (
-            rect.height > 0 &&
-            rect.top >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-        );
+        // MODIFICA QUI: Condizione più semplice e robusta per la visibilità su mobile
+        // Considera la home visibile se la sua parte superiore è nel viewport (anche se scrollata)
+        // e la sua parte inferiore non è completamente fuori dallo schermo in alto.
+        const isHomeVisibleForPopup = rect.top < (window.innerHeight || document.documentElement.clientHeight) && rect.bottom > 0;
 
-        if (isHomeFullyVisible && !secretPopupHiddenByMenu) {
+        if (isHomeVisibleForPopup && !secretPopupHiddenByMenu) {
             showSecretPopup();
         } else {
             hideSecretPopup();
@@ -571,37 +589,55 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
     });
 
+    // MODIFICA QUI: Questo è il punto chiave per la comparsa iniziale su mobile.
+    // Forza la comparsa del popup dopo un breve ritardo all'evento DOMContentLoaded,
+    // se non è già apparso e siamo su mobile, e non è stato nascosto dal menu.
+    // Usiamo DOMContentLoaded per agire prima di `load` per un'esperienza più reattiva.
+    window.addEventListener('DOMContentLoaded', function() {
+        // Controlla che il popup non sia già apparso e siamo su mobile (o comunque su schermi piccoli)
+        if (!hasSecretPopupAppearedOnce && window.innerWidth <= 768) {
+            // Diamo un piccolissimo ritardo per consentire al browser di stabilizzare il layout
+            setTimeout(() => {
+                // Esegui il controllo di visibilità dopo un breve ritardo, se il popup non è nascosto dal menu
+                if (!secretPopupHiddenByMenu) {
+                    checkAndToggleSecretPopup();
+                }
+            }, 500); // 500ms di ritardo per la prima attivazione forzata
+        }
+    });
+
+    // La riga successiva `window.addEventListener('load', checkAndToggleSecretPopup);`
+    // può essere rimossa o mantenuta, ma con la nuova logica DOMContentLoaded+setTimeout,
+    // il suo impatto sarà minore o ridondante per la comparsa iniziale del popup segreto.
+    // La lascio per coerenza con il tuo codice precedente, ma il trigger principale sarà il DOMContentLoaded.
     window.addEventListener('load', checkAndToggleSecretPopup);
 
-    // --- Logica Pop-up Novità (News Popup) ---
 
-    // Funzione per mostrare il news popup
+    // --- Logica Pop-up Novità (News Popup) ---
+    // Riabilitata per essere funzionale come da tuo codice originale
     function showNewsPopup() {
-        // Ho commentato questa parte per debug, se vuoi ripristinarla per il news-popup
-        // if (!newsPopup || newsPopup.classList.contains('is-active') || newsPopup.classList.contains('is-entering')) {
-        //     return;
-        // }
-        // newsPopup.classList.remove('hidden');
-        // newsPopup.classList.add('is-active');
-        // document.body.style.overflow = 'hidden';
+        if (!newsPopup || newsPopup.classList.contains('is-active') || newsPopup.classList.contains('is-entering')) {
+            return;
+        }
+        newsPopup.classList.remove('hidden');
+        newsPopup.classList.add('is-active');
+        document.body.style.overflow = 'hidden';
     }
 
-    // Funzione per nascondere il news popup
     function hideNewsPopup() {
-        // Ho commentato questa parte per debug, se vuoi ripristinarla per il news-popup
-        // if (!newsPopup || newsPopup.classList.contains('hidden') || newsPopup.classList.contains('is-exiting')) {
-        //     return;
-        // }
-        // newsPopup.classList.remove('is-active');
-        // newsPopup.addEventListener('transitionend', function handler() {
-        //     newsPopup.classList.add('hidden');
-        //     newsPopup.removeEventListener('transitionend', handler);
-        //     document.body.style.overflow = '';
-        // });
+        if (!newsPopup || newsPopup.classList.contains('hidden') || newsPopup.classList.contains('is-exiting')) {
+            return;
+        }
+        newsPopup.classList.remove('is-active');
+        newsPopup.addEventListener('transitionend', function handler() {
+            newsPopup.classList.add('hidden');
+            newsPopup.removeEventListener('transitionend', handler);
+            document.body.style.overflow = '';
+        });
     }
 
     // Mostra il news popup quando il DOM è completamente caricato
-    // setTimeout(showNewsPopup, 500); // Ho commentato questa riga per debug
+    setTimeout(showNewsPopup, 500);
 
     // Chiudi il news popup quando si clicca il bottone di chiusura
     if (closeNewsPopupBtn) {
