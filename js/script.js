@@ -540,20 +540,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const rect = homeSection.getBoundingClientRect();
 
-        // MODIFICA QUI: Condizione per rendere il popup visibile solo quando la home è l'unica sezione visibile
-        // e non è stata scrollata significativamente.
-        // Il popup è visibile se:
-        // 1. La parte superiore della homeSection è quasi all'inizio del viewport (o leggermente oltre il top, per fluttuazioni).
-        // 2. La parte inferiore della homeSection è ancora nel viewport, o quasi.
-        // Questo significa che l'intera homeSection è sostanzialmente nel campo visivo dell'utente,
-        // senza che altre sezioni siano prepotentemente entrate.
-        const isHomeTheOnlySectionVisible = (
-            rect.top >= -50 && // La parte superiore della home è vicina allo 0 o poco sopra
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 50 // La parte inferiore della home è vicina al bottom del viewport o poco sotto
+        // MODIFICA QUI: Condizione per rendere il popup visibile solo e unicamente quando la home è in primo piano.
+        // Il popup è visibile solo se la parte superiore della homeSection è molto vicina al top del viewport (o leggermente oltre),
+        // e la parte inferiore della homeSection è ancora dentro (o appena fuori) il bottom del viewport.
+        // Questo implica che l'intera homeSection è visibile o sta per essere visualizzata/lasciata.
+        const isHomeFullyInViewOrEntering = (
+            rect.top <= 10 && rect.top >= - (window.innerHeight || document.documentElement.clientHeight) * 0.1 && // La home è all'inizio dello schermo o leggermente scrollata su
+            rect.bottom > (window.innerHeight || document.documentElement.clientHeight) * 0.9 // Almeno il 90% della home è ancora visibile
         );
 
+        // Aggiungi un'ulteriore condizione per catturare lo scroll esattamente all'inizio della pagina.
+        // window.scrollY è 0 all'inizio della pagina.
+        const isAtTopOfPage = window.scrollY < 50; // consideriamo "inizio pagina" se lo scroll è meno di 50px
 
-        if (isHomeTheOnlySectionVisible && !secretPopupHiddenByMenu) {
+
+        // Il popup dovrebbe apparire se la home è la sezione "attiva" (in alto e ben visibile),
+        // e non è stata nascosta dal menu mobile.
+        if (isAtTopOfPage && isHomeFullyInViewOrEntering && !secretPopupHiddenByMenu) {
             showSecretPopup();
         } else {
             hideSecretPopup();
@@ -596,9 +599,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!hasSecretPopupAppearedOnce && window.innerWidth <= 768) {
             setTimeout(() => {
                 const rect = homeSection.getBoundingClientRect();
-                // MODIFICA QUI: La condizione di apparizione iniziale deve essere stretta
-                // per assicurare che appaia solo quando la home è visibile per la prima volta.
-                if (rect.top === 0 && !secretPopupHiddenByMenu) {
+                // MODIFICA QUI: La condizione di apparizione iniziale deve essere molto stretta
+                // per assicurare che appaia solo quando la home è visibile per la prima volta
+                // e l'utente è all'inizio dello scroll.
+                if (rect.top === 0 && window.scrollY === 0 && !secretPopupHiddenByMenu) {
                     showSecretPopup();
                 }
             }, 500); // Ritardo per consentire al layout di stabilizzarsi
