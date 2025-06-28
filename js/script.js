@@ -13,7 +13,6 @@ function setupHospitalityForm() {
     const form = document.getElementById('ospitalitaForm');
     const regioneSelect = document.getElementById('regione');
     const provinciaSelect = document.getElementById('provincia');
-
     if (!form || !regioneSelect || !provinciaSelect) return;
 
     const provinceData = {
@@ -43,7 +42,6 @@ function setupHospitalityForm() {
     provinciaSelect.disabled = true;
     provinciaSelect.innerHTML = '<option value="">Prima seleziona la regione</option>';
 
-
     regioneSelect.addEventListener('change', function() {
         const regioneSelezionata = this.value;
         provinciaSelect.innerHTML = '<option value="">Seleziona provincia</option>';
@@ -65,7 +63,6 @@ function setupHospitalityForm() {
         e.preventDefault();
         let isValid = true;
         const requiredFields = form.querySelectorAll('[required]');
-
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 field.style.borderColor = '#e74c3c';
@@ -86,7 +83,7 @@ function setupHospitalityForm() {
 
         const cellulareField = document.getElementById('cellulare');
         const cellulareRegex = /^[0-9]{8,15}$/;
-        if (cellulareField && cellulareField.value && !cellulareRegex.test(cellulareField.value.replace(/\s/g, ''))) {
+        if (cellulareField && cellulareField.value && !cellulareRegex.test(cellulareField.value.replace(/\s/g, ''))){
             cellulareField.style.borderColor = '#e74c3c';
             isValid = false;
         } else if (cellulareField) {
@@ -106,6 +103,7 @@ function setupHospitalityForm() {
                 dataArrivoField.style.borderColor = '#A3B18A';
             }
         }
+
         if (dataPartenzaField && dataPartenzaField.value) {
             if (dataArrivoField && dataArrivoField.value && new Date(dataPartenzaField.value) <= new Date(dataArrivoField.value)) {
                 dataPartenzaField.style.borderColor = '#e74c3c';
@@ -160,7 +158,6 @@ function setupSubscriptionForm() {
         e.preventDefault();
         let isValid = true;
         const requiredFields = form.querySelectorAll('[required]');
-
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 field.style.borderColor = '#e74c3c';
@@ -239,7 +236,6 @@ function setupSubscriptionForm() {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
     // Variabili principali
     const body = document.body;
@@ -255,22 +251,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // Pop-up segreto e minigioco
     const secretPopup = document.getElementById('secret-popup');
     const homeSection = document.getElementById('home');
-    // Non c'è bisogno di mainElement qui per la logica dei popup
-    const secretPopupButton = secretPopup ? secretPopup.querySelector('.popup-button') : null; // Cambiato nome
-    const secretPopupClose = secretPopup ? secretPopup.querySelector('.secret-popup-close') : null; // Cambiato nome e selettore
+    const secretPopupButton = secretPopup ? secretPopup.querySelector('.popup-button') : null;
+    const secretPopupClose = secretPopup ? secretPopup.querySelector('.secret-popup-close') : null;
 
     // Aggiunta per il News Pop-up
     const newsPopup = document.getElementById('news-popup');
-    const closeNewsPopupBtn = document.getElementById('close-news-popup'); // AGGIORNATO L'ID QUI!
+    const closeNewsPopupBtn = document.getElementById('close-news-popup');
+
+    // MODIFICHE QUI: Variabile per tracciare se il secretPopup è stato nascosto dal menu mobile
+    let secretPopupHiddenByMenu = false;
 
     // Funzione Toggle Menu Mobile
     function toggleMenu() {
         if (menuToggle && mobileNav) {
+            const isActive = mobileNav.classList.contains('active');
+
             menuToggle.classList.toggle('active');
             mobileNav.classList.toggle('active');
             body.classList.toggle('no-scroll', mobileNav.classList.contains('active'));
+
+            // MODIFICHE QUI: Gestione del secretPopup all'apertura/chiusura del menu mobile
+            // Controlla se siamo su mobile (media query CSS display: none per nav-links)
+            const isMobile = window.getComputedStyle(document.querySelector('.nav-links')).display === 'none';
+
+            if (isMobile) {
+                if (!isActive) { // Menu sta per aprirsi
+                    if (secretPopup && secretPopup.classList.contains('is-active')) {
+                        hideSecretPopup();
+                        secretPopupHiddenByMenu = true; // Imposta il flag perché è stato nascosto dal menu
+                    }
+                } else { // Menu sta per chiudersi
+                    if (secretPopupHiddenByMenu) {
+                        // Resetta il flag e ricontrolla la visibilità del popup
+                        secretPopupHiddenByMenu = false;
+                        checkAndToggleSecretPopup();
+                    }
+                }
+            }
         }
     }
+
     if (menuToggle) {
         menuToggle.addEventListener('click', toggleMenu);
     }
@@ -280,9 +300,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (mobileNav && mobileNav.classList.contains('active')) {
             const isClickInsideNav = mobileNav.contains(event.target);
             const isClickOnToggle = menuToggle && menuToggle.contains(event.target);
-            const isNavLink = event.target.closest('.mobile-nav a'); // Aggiunto per gestire i link interni al menu
+            const isNavLink = event.target.closest('.mobile-nav a');
 
             if (isNavLink || (!isClickInsideNav && !isClickOnToggle)) {
+                // Se si clicca un link interno al menu o fuori dal menu, chiudi il menu.
+                // toggleMenu() gestirà anche la riapparizione del secretPopup se necessario.
                 toggleMenu();
             }
         }
@@ -302,6 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isClickOnHeroSection = heroSection && heroSection.contains(event.target);
         const isClickOnNavLink = event.target.closest('a[href^="#"]');
 
+        // MODIFICHE QUI: Assicurati che il popup segreto venga riattivato se si torna alla home tramite click sulla hero-section
         if (isClickOnHeroSection && !isClickOnHeader && !isClickOnNavLink) {
             const chiSiamoSection = document.querySelector('#chi-siamo');
             if (chiSiamoSection) {
@@ -331,14 +354,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.content-section').forEach(section => {
             const sectionTop = section.getBoundingClientRect().top;
             const windowHeight = window.innerHeight;
-            if (sectionTop < windowHeight * 0.85) { // Attiva un po' prima che la sezione sia completamente visibile
+            if (sectionTop < windowHeight * 0.85) {
                 section.classList.add('visible');
             }
-            // Opzionale: per rimuovere la classe 'visible' se si scrolla indietro
-            // else {
-            //    section.classList.remove('visible');
-            // }
         });
+
+        // MODIFICHE QUI: Richiama checkAndToggleSecretPopup solo se il menu mobile non è aperto
+        if (!mobileNav.classList.contains('active')) {
+            checkAndToggleSecretPopup();
+        }
     });
 
     // Scroll fluido per link di navigazione
@@ -348,15 +372,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
 
+            // MODIFICHE QUI: Quando si clicca un link di navigazione interno
             if (targetElement) {
                 const headerOffset = header ? header.offsetHeight : 0;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
+
+                // Se il target è la home, e il popup era stato nascosto dal menu, riattivalo
+                if (targetId === '#home' && secretPopupHiddenByMenu) {
+                    secretPopupHiddenByMenu = false; // Reset del flag
+                    showSecretPopup();
+                } else if (targetId !== '#home') { // Se si va a un'altra sezione, nascondi il popup
+                    hideSecretPopup();
+                    // Non impostare secretPopupHiddenByMenu a true qui,
+                    // perché non è stato nascosto dal menu mobile.
+                }
             }
         });
     });
@@ -366,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
         backToTop.addEventListener('click', scrollToTopSmoothly);
     }
 
-    // Sistema particelle
+    // Sistema particelle (Nessuna modifica qui)
     const backgroundContainer = document.querySelector('.background');
     if (backgroundContainer) {
         const createParticle = () => {
@@ -391,16 +425,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Anno corrente per il footer
+    // Anno corrente per il footer (Nessuna modifica qui)
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // Inizializzazione form ospitalità e iscrizione
+    // Inizializzazione form ospitalità e iscrizione (Nessuna modifica qui)
     setupHospitalityForm();
     setupSubscriptionForm();
 
-    // Toggle Modulo Ospitalità
+    // Toggle Modulo Ospitalità (Nessuna modifica qui)
     if (ospitalitaToggle && formContainer && toggleArrow) {
         ospitalitaToggle.addEventListener('click', function() {
             const isOpen = formContainer.classList.contains('open');
@@ -418,23 +452,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Assicurati che il form di ospitalità sia inizialmente chiuso
+    // Assicurati che il form di ospitalità sia inizialmente chiuso (Nessuna modifica qui)
     if (formContainer) {
         formContainer.classList.remove('open');
     }
 
-    // Logica per le "Unità Interattive" (slideshow e espansione)
+    // Logica per le "Unità Interattive" (slideshow e espansione) (Nessuna modifica qui)
     const unitaCards = document.querySelectorAll('.unita-card-interattiva');
     const unitaWrapper = document.querySelector('.unita-interattiva-wrapper');
-
     if (unitaCards.length > 0 && unitaWrapper) {
         unitaCards.forEach(card => {
             card.addEventListener('click', () => {
                 const isAlreadyActive = card.classList.contains('is-active');
-
                 unitaWrapper.classList.remove('is-active-child');
                 unitaCards.forEach(c => c.classList.remove('is-active'));
-
                 if (!isAlreadyActive) {
                     card.classList.add('is-active');
                     unitaWrapper.classList.add('is-active-child');
@@ -446,15 +477,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.unita-card-interattiva').forEach(card => {
         const slideshow = card.querySelector('.unita-slideshow');
         if (!slideshow) return;
-
         const images = slideshow.querySelectorAll('img');
         if (images.length <= 1) return;
-
         let currentIndex = 0;
-
-        // Inizializza la prima immagine come attiva
         images[currentIndex].classList.add('slide-active');
-
         setInterval(() => {
             images[currentIndex].classList.remove('slide-active');
             currentIndex = (currentIndex + 1) % images.length;
@@ -462,43 +488,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-
     // --- Logica Pop-up Segreto (Secret Popup) con Animazioni ---
 
-    // Funzione per mostrare il pop-up con animazione
-    function showSecretPopup() { // Rinominate per evitare conflitti con il news popup
+    // Funzione per mostrare il pop-up con animazione (Nessuna modifica qui)
+    function showSecretPopup() {
         if (!secretPopup || secretPopup.classList.contains('is-entering') || secretPopup.classList.contains('is-active')) {
-            return; // Già in fase di ingresso o già attivo
+            return;
         }
-        secretPopup.classList.remove('is-hidden', 'is-exiting'); // Rimuovi classi di stato nascosto/uscita
-        secretPopup.classList.add('is-entering'); // Aggiungi classe di ingresso
+        secretPopup.classList.remove('is-hidden', 'is-exiting');
+        secretPopup.classList.add('is-entering');
         secretPopup.addEventListener('animationend', function handler() {
             secretPopup.classList.remove('is-entering');
-            secretPopup.classList.add('is-active'); // Aggiungi la classe attiva dopo l'animazione di ingresso
-            secretPopup.onanimationend = null; // Rimuovi l'handler
+            secretPopup.classList.add('is-active');
+            secretPopup.onanimationend = null;
         }, {
             once: true
-        }); // Rimuove l'handler dopo una singola esecuzione
+        });
     }
 
-    // Funzione per nascondere il pop-up con animazione
-    function hideSecretPopup() { // Rinominate per evitare conflitti con il news popup
+    // Funzione per nascondere il pop-up con animazione (Nessuna modifica qui)
+    function hideSecretPopup() {
         if (!secretPopup || secretPopup.classList.contains('is-exiting') || (!secretPopup.classList.contains('is-active') && !secretPopup.classList.contains('is-entering'))) {
-            return; // Già in fase di uscita, non attivo, o non in ingresso
+            return;
         }
-        secretPopup.classList.remove('is-entering', 'is-active'); // Rimuovi classi di ingresso/attivo
-        secretPopup.classList.add('is-exiting'); // Aggiungi classe di uscita
+        secretPopup.classList.remove('is-entering', 'is-active');
+        secretPopup.classList.add('is-exiting');
         secretPopup.addEventListener('animationend', function handler() {
             secretPopup.classList.remove('is-exiting');
-            secretPopup.classList.add('is-hidden'); // Ritorna allo stato nascosto
-            secretPopup.onanimationend = null; // Rimuovi l'handler
+            secretPopup.classList.add('is-hidden');
+            secretPopup.onanimationend = null;
         }, {
             once: true
-        }); // Rimuove l'handler dopo una singola esecuzione
+        });
     }
 
     // Funzione per controllare la visibilità della sezione "home" e agire sul pop-up
-    function checkAndToggleSecretPopup() { // Rinominate per specificità
+    function checkAndToggleSecretPopup() {
         if (!secretPopup || !homeSection) {
             return;
         }
@@ -517,27 +542,36 @@ document.addEventListener('DOMContentLoaded', function() {
             rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
         );
 
-        if (isHomeFullyVisible) {
+        // MODIFICHE QUI: Mostra il popup solo se la home è completamente visibile E
+        // se non è stato nascosto esplicitamente dal menu mobile.
+        if (isHomeFullyVisible && !secretPopupHiddenByMenu) {
             showSecretPopup();
         } else {
+            // Se la home non è completamente visibile, o se il popup è stato nascosto dal menu,
+            // assicurati che sia nascosto.
             hideSecretPopup();
         }
     }
 
-    // Inizializza il pop-up segreto come nascosto all'avvio
+    // Inizializza il pop-up segreto come nascosto all'avvio (Nessuna modifica qui)
     if (secretPopup) {
         secretPopup.classList.add('is-hidden');
     }
 
-    // Event listener per i bottoni del pop-up segreto
-    if (secretPopupButton) { // Usato il nuovo nome della variabile
+    // Event listener per i bottoni del pop-up segreto (Nessuna modifica qui)
+    if (secretPopupButton) {
         secretPopupButton.addEventListener('click', function() {
-            hideSecretPopup(); // Nasconde il pop-up con animazione
+            hideSecretPopup();
+            // Quando si clicca il bottone del popup, resetta il flag
+            secretPopupHiddenByMenu = false;
         });
     }
-    if (secretPopupClose) { // Usato il nuovo nome della variabile
+
+    if (secretPopupClose) {
         secretPopupClose.addEventListener('click', function() {
-            hideSecretPopup(); // Nasconde il pop-up con animazione
+            hideSecretPopup();
+            // Quando si clicca il bottone di chiusura del popup, resetta il flag
+            secretPopupHiddenByMenu = false;
         });
     }
 
@@ -545,28 +579,27 @@ document.addEventListener('DOMContentLoaded', function() {
     let scrollOrResizeTimeout;
     window.addEventListener('scroll', function() {
         clearTimeout(scrollOrResizeTimeout);
-        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100); // Debounce
+        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
     });
     window.addEventListener('resize', function() {
         clearTimeout(scrollOrResizeTimeout);
-        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100); // Debounce
+        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
     });
 
-    // --- Logica Pop-up Novità (News Popup) ---
+    // MODIFICHE QUI: Aggiungi un listener per il caricamento completo della pagina
+    // per assicurarti che checkAndToggleSecretPopup venga eseguito correttamente al primo caricamento
+    window.addEventListener('load', checkAndToggleSecretPopup);
+
+
+    // --- Logica Pop-up Novità (News Popup) --- (Nessuna modifica qui)
 
     // Funzione per mostrare il news popup
     function showNewsPopup() {
-        // Controllo se il popup è già visibile o in fase di animazione per evitare problemi
         if (!newsPopup || newsPopup.classList.contains('is-active') || newsPopup.classList.contains('is-entering')) {
             return;
         }
-
-        // Rimuovi la classe 'hidden' per iniziare la transizione
         newsPopup.classList.remove('hidden');
-        // Aggiungi la classe 'is-active' per attivare gli stili di visibilità e animazione
         newsPopup.classList.add('is-active');
-
-        // Blocca lo scroll del body quando il popup è attivo
         document.body.style.overflow = 'hidden';
     }
 
@@ -575,24 +608,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!newsPopup || newsPopup.classList.contains('hidden') || newsPopup.classList.contains('is-exiting')) {
             return;
         }
-
-        // Rimuovi la classe 'is-active' per avviare l'animazione di uscita
         newsPopup.classList.remove('is-active');
-
-        // Aggiungi un listener per la fine della transizione
         newsPopup.addEventListener('transitionend', function handler() {
-            // Aggiungi la classe 'hidden' solo dopo che l'animazione di uscita è completa
             newsPopup.classList.add('hidden');
-            // Rimuovi l'event listener per evitare esecuzioni multiple
             newsPopup.removeEventListener('transitionend', handler);
-            // Ripristina lo scroll del body
             document.body.style.overflow = '';
         });
     }
 
     // Mostra il news popup quando il DOM è completamente caricato
-    // Utilizziamo un setTimeout per un leggero ritardo, evitando problemi di rendering iniziali
-    setTimeout(showNewsPopup, 500); // Mostra dopo 0.5 secondi
+    setTimeout(showNewsPopup, 500);
 
     // Chiudi il news popup quando si clicca il bottone di chiusura
     if (closeNewsPopupBtn) {
