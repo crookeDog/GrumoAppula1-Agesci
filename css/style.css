@@ -423,6 +423,10 @@ body.no-scroll {
     animation-delay: 0.6s;
 }
 
+.mobile-nav.active a:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
 .mobile-nav a:hover {
     background: rgba(58, 90, 64, 0.1);
     transform: translateX(0) scale(1.05);
@@ -1237,6 +1241,10 @@ button {
 
     .mobile-nav.active {
         width: 100vw;
+    }
+
+    .contenitore-descrizione {
+        padding-bottom: 20rem; /* Sposta il testo più in alto su mobile */
     }
 
     .descrizione {
