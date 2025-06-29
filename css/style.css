@@ -26,9 +26,6 @@ body.no-scroll {
     cursor: pointer;
 }
 
-/* Ho rimosso l'ID #contact e l'ho sostituito con la classe generica .content-section */
-/* Assicurati che se hai un elemento con ID "contact" nel tuo HTML, tu lo rimuova o lo cambi. */
-
 .container-contact {
     max-width: 800px;
     margin: 40px auto;
@@ -39,7 +36,7 @@ body.no-scroll {
     text-align: center;
 }
 
-.content-section#contatti h1 { /* Ho reso questo selettore più specifico */
+.content-section#contatti h1 {
     color: #3A5A40;
     font-size: 2.8em;
     margin-bottom: 15px;
@@ -125,22 +122,21 @@ body.no-scroll {
         padding: 20px;
     }
 
-    /* Modificato per riferirsi a .content-section#contatti h1 */
     .content-section#contatti h1 {
         font-size: 2.2em;
     }
 
-    .sottotitolo { /* Questo selettore sembra non essere usato nell'HTML fornito */
+    .sottotitolo {
         font-size: 1em;
         margin-bottom: 30px;
     }
 
-    .section-block { /* Questo selettore sembra non essere usato nell'HTML fornito */
+    .section-block {
         padding: 20px;
         margin-bottom: 20px;
     }
 
-    .section-block-contact h2 { /* Più specifico */
+    .section-block-contact h2 {
         font-size: 1.5em;
     }
 
@@ -562,7 +558,7 @@ body.no-scroll {
     right: 2rem;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #0c04f6 0%, #f01c06 100%); /* Colori a caso, puoi cambiarli */
+    background: linear-gradient(135deg, #0c04f6 0%, #f01c06 100%);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -584,7 +580,7 @@ body.no-scroll {
 .back-to-top:hover {
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #0c04f6 0%, #f01c06 100%); /* Colori a caso, puoi cambiarli */
+    background: linear-gradient(135deg, #0c04f6 0%, #f01c06 100%);
 }
 
 .back-to-top:active {
@@ -1244,7 +1240,7 @@ button {
     }
 
     .contenitore-descrizione {
-        padding-bottom: 20rem; /* Sposta il testo più in alto su mobile */
+        padding-bottom: 20rem;
     }
 
     .descrizione {
@@ -1275,41 +1271,36 @@ button {
     }
 }
 
-/* --- Stili Generali per i Popup (Overlay) --- */
 .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Sfondo semi-trasparente */
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Assicurati che sia sopra tutto il resto */
-    opacity: 0; /* Inizia invisibile per l'animazione */
-    visibility: hidden; /* Nasconde l'elemento per i browser che non supportano le transition di opacity */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Animazione di fade */
-    pointer-events: none; /* Inizialmente non interattivo */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
 }
 
-/* Stato nascosto generico per tutti i popup overlay */
 .popup-overlay.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-/* Stato attivo generico per tutti i popup overlay: visibile con transizione */
 .popup-overlay.is-active {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto; /* Permette interazioni quando attivo */
+    pointer-events: auto;
 }
 
-
-/* --- Stili specifici per il NEWS POPUP --- */
-#news-popup .popup-content { /* Utilizza l'ID del news popup per specificità */
+#news-popup .popup-content {
     background: #fff;
     padding: 30px;
     border-radius: 10px;
@@ -1318,19 +1309,18 @@ button {
     max-width: 500px;
     width: 90%;
     position: relative;
-    transform: scale(0.9); /* Inizia più piccolo per l'animazione */
-    opacity: 0; /* Inizialmente invisibile */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Animazione per la scala e l'opacità */
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Stato attivo del news-popup-overlay: il contenuto appare */
 #news-popup.is-active .popup-content {
-    transform: scale(1); /* Torna alla dimensione normale */
-    opacity: 1; /* Diventa visibile */
+    transform: scale(1);
+    opacity: 1;
 }
 
-/* Bottone di chiusura del news popup */
-#news-popup .popup-close-btn { /* Utilizza l'ID del news popup per specificità */
+
+#news-popup .popup-close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -1361,7 +1351,6 @@ button {
     background-color: #8B9A7B;
 }
 
-/* --- Stili specifici per il SECRET POPUP (rinominati per chiarezza) --- */
 .secret-popup {
     position: fixed;
     bottom: 20px;
@@ -1383,7 +1372,7 @@ button {
     pointer-events: none;
 }
 
-.secret-popup .secret-popup-content { /* Cambiato qui */
+.secret-popup .secret-popup-content {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1424,7 +1413,7 @@ button {
     transform: translateY(-2px);
     box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
 }
-.secret-popup .secret-popup-close { /* Cambiato qui */
+.secret-popup .secret-popup-close {
     position: absolute;
     top: -10px;
     right: -10px;
@@ -1446,7 +1435,6 @@ button {
     color: #3A5A40;
 }
 
-/* Keyframes per l'animazione di ingresso (fade-in e scorrimento da destra) */
 @keyframes popup-enter-animation {
     from {
         opacity: 0;
@@ -1459,7 +1447,7 @@ button {
         visibility: visible;
     }
 }
-/* Keyframes per l'animazione di uscita (fade-out e scorrimento a destra) */
+
 @keyframes popup-exit-animation {
     from {
         opacity: 1;
@@ -1481,7 +1469,7 @@ button {
     animation: popup-exit-animation 0.5s ease-in forwards;
     pointer-events: none;
 }
-/* Stato quando il pop-up è completamente visibile dopo l'animazione di ingresso */
+
 .secret-popup.is-active {
     opacity: 1;
     transform: translateX(0);
@@ -1489,7 +1477,6 @@ button {
     pointer-events: auto;
 }
 
-/* Media queries per il pop-up */
 @media (max-width: 768px) {
     .secret-popup {
         padding: 20px;
