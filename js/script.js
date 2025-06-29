@@ -1,6 +1,3 @@
-// script.js
-
-// Funzione scrollToTopSmoothly, rimane fuori da DOMContentLoaded per essere globale
 function scrollToTopSmoothly() {
     window.scrollTo({
         top: 0,
@@ -8,7 +5,6 @@ function scrollToTopSmoothly() {
     });
 }
 
-// Funzione per impostare il form di ospitalità
 function setupHospitalityForm() {
     const form = document.getElementById('ospitalitaForm');
     const regioneSelect = document.getElementById('regione');
@@ -38,7 +34,6 @@ function setupHospitalityForm() {
         'Veneto': ['Belluno', 'Padova', 'Rovigo', 'Treviso', 'Venezia', 'Verona', 'Vicenza']
     };
 
-    // Inizializza il select della provincia disabilitato
     provinciaSelect.disabled = true;
     provinciaSelect.innerHTML = '<option value="">Prima seleziona la regione</option>';
 
@@ -86,7 +81,7 @@ function setupHospitalityForm() {
         if (cellulareField && cellulareField.value && !cellulareRegex.test(cellulareField.value.replace(/\s/g, ''))) {
             cellulareField.style.borderColor = '#e74c3c';
             isValid = false;
-        } else if (cellulareField) {
+        } else if (cellurareField) {
             cellulareField.style.borderColor = '#A3B18A';
         }
 
@@ -149,7 +144,6 @@ function setupHospitalityForm() {
     });
 }
 
-// Funzione per impostare il form di iscrizione
 function setupSubscriptionForm() {
     const form = document.getElementById('formIscrizione');
     if (!form) return;
@@ -237,7 +231,6 @@ function setupSubscriptionForm() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Variabili principali
     const body = document.body;
     const header = document.getElementById('header');
     const menuToggle = document.querySelector('.menu-toggle');
@@ -248,23 +241,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const formContainer = document.getElementById('formContainer');
     const toggleArrow = ospitalitaToggle ? ospitalitaToggle.querySelector('.toggle-arrow') : null;
 
-    // Pop-up segreto e minigioco
     const secretPopup = document.getElementById('secret-popup');
     const homeSection = document.getElementById('home');
     const secretPopupButton = secretPopup ? secretPopup.querySelector('.popup-button') : null;
     const secretPopupClose = secretPopup ? secretPopup.querySelector('.secret-popup-close') : null;
 
-    // Aggiunta per il News Pop-up
     const newsPopup = document.getElementById('news-popup');
     const closeNewsPopupBtn = document.getElementById('close-news-popup');
 
-    // Variabile per tracciare se il secretPopup è stato nascosto dal menu mobile
     let secretPopupHiddenByMenu = false;
-    // Variabile per tracciare se il popup è già apparso per la prima volta
     let hasSecretPopupAppearedOnce = false;
+    let isSecretPopupManuallyClosed = false;
 
-
-    // Funzione Toggle Menu Mobile
     function toggleMenu() {
         if (menuToggle && mobileNav) {
             const isActive = mobileNav.classList.contains('active');
@@ -276,17 +264,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const isMobile = window.getComputedStyle(document.querySelector('.nav-links')).display === 'none';
 
             if (isMobile) {
-                if (!isActive) { // Menu sta per aprirsi
+                if (!isActive) {
                     if (secretPopup && secretPopup.classList.contains('is-active')) {
                         hideSecretPopup();
-                        secretPopupHiddenByMenu = true; // Imposta il flag perché è stato nascosto dal menu
+                        secretPopupHiddenByMenu = true;
                     }
-                } else { // Menu sta per chiudersi
+                } else {
                     if (secretPopupHiddenByMenu) {
-                        secretPopupHiddenByMenu = false; // Resetta il flag
+                        secretPopupHiddenByMenu = false;
                         const rect = homeSection.getBoundingClientRect();
-                        if (rect.top === 0) { // Siamo sulla home all'inizio
-                             showSecretPopup();
+                        if (rect.top === 0) {
+                            if (!isSecretPopupManuallyClosed) {
+                                showSecretPopup();
+                            }
                         } else {
                              hideSecretPopup();
                         }
@@ -300,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
         menuToggle.addEventListener('click', toggleMenu);
     }
 
-    // Chiusura Menu Mobile (click fuori o su link)
     document.addEventListener('click', function(event) {
         if (mobileNav && mobileNav.classList.contains('active')) {
             const isClickInsideNav = mobileNav.contains(event.target);
@@ -313,14 +302,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Chiusura Menu Mobile (tasto ESC)
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
             toggleMenu();
         }
     });
 
-    // Click sulla hero-section per scrollare a "Chi siamo"
     document.addEventListener('click', function(event) {
         const heroSection = document.querySelector('.hero-section');
         const isClickOnHeader = header && header.contains(event.target);
@@ -341,7 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Gestione Scroll (header e bottone torna su, animazioni sezioni)
     window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
 
@@ -368,7 +354,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Scroll fluido per link di navigazione
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -385,25 +370,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 if (targetId === '#home') {
-                    secretPopupHiddenByMenu = false; // Reset del flag quando si torna alla home
-                    if (!mobileNav.classList.contains('active')) {
+                    secretPopupHiddenByMenu = false;
+                    if (!mobileNav.classList.contains('active') && !isSecretPopupManuallyClosed) {
                         showSecretPopup();
                     } else {
                         hideSecretPopup();
                     }
-                } else { // Se si va a un'altra sezione, nascondi il popup
+                } else {
                     hideSecretPopup();
                 }
             }
         });
     });
 
-    // Funzione back to top
     if (backToTop) {
         backToTop.addEventListener('click', scrollToTopSmoothly);
     }
 
-    // Sistema particelle
     const backgroundContainer = document.querySelector('.background');
     if (backgroundContainer) {
         const createParticle = () => {
@@ -428,16 +411,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Anno corrente per il footer
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // Inizializzazione form ospitalità e iscrizione
     setupHospitalityForm();
     setupSubscriptionForm();
 
-    // Toggle Modulo Ospitalità
     if (ospitalitaToggle && formContainer && toggleArrow) {
         ospitalitaToggle.addEventListener('click', function() {
             const isOpen = formContainer.classList.contains('open');
@@ -455,12 +435,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Assicurati che il form di ospitalità sia inizialmente chiuso
     if (formContainer) {
         formContainer.classList.remove('open');
     }
 
-    // Logica per le "Unità Interattive" (slideshow e espansione)
     const unitaCards = document.querySelectorAll('.unita-card-interattiva');
     const unitaWrapper = document.querySelector('.unita-interattiva-wrapper');
     if (unitaCards.length > 0 && unitaWrapper) {
@@ -491,10 +469,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    // --- Logica Pop-up Segreto (Secret Popup) con Animazioni ---
-
-    // Funzione per mostrare il pop-up con animazione
     function showSecretPopup() {
+        if (isSecretPopupManuallyClosed) {
+            hideSecretPopup();
+            return;
+        }
+
         if (!secretPopup || secretPopup.classList.contains('is-entering') || secretPopup.classList.contains('is-active')) {
             return;
         }
@@ -510,7 +490,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Funzione per nascondere il pop-up con animazione
     function hideSecretPopup() {
         if (!secretPopup || secretPopup.classList.contains('is-exiting') || (!secretPopup.classList.contains('is-active') && !secretPopup.classList.contains('is-entering'))) {
             return;
@@ -526,13 +505,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Funzione per controllare la visibilità della sezione "home" e agire sul pop-up
     function checkAndToggleSecretPopup() {
+        if (isSecretPopupManuallyClosed) {
+            hideSecretPopup();
+            return;
+        }
+
         if (!secretPopup || !homeSection) {
             return;
         }
 
-        // Se la sezione minigioco è già sbloccata, nascondi sempre il pop-up e non mostrarlo più
         if (document.getElementById('minigame-secret-section')) {
             hideSecretPopup();
             return;
@@ -540,22 +522,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const rect = homeSection.getBoundingClientRect();
 
-        // MODIFICA QUI: Condizione per rendere il popup visibile solo e unicamente quando la home è in primo piano.
-        // Il popup è visibile solo se la parte superiore della homeSection è molto vicina al top del viewport (o leggermente oltre),
-        // e la parte inferiore della homeSection è ancora dentro (o appena fuori) il bottom del viewport.
-        // Questo implica che l'intera homeSection è visibile o sta per essere visualizzata/lasciata.
         const isHomeFullyInViewOrEntering = (
-            rect.top <= 10 && rect.top >= - (window.innerHeight || document.documentElement.clientHeight) * 0.1 && // La home è all'inizio dello schermo o leggermente scrollata su
-            rect.bottom > (window.innerHeight || document.documentElement.clientHeight) * 0.9 // Almeno il 90% della home è ancora visibile
+            rect.top <= 10 && rect.top >= - (window.innerHeight || document.documentElement.clientHeight) * 0.1 &&
+            rect.bottom > (window.innerHeight || document.documentElement.clientHeight) * 0.9 
         );
+        const isAtTopOfPage = window.scrollY < 50;
 
-        // Aggiungi un'ulteriore condizione per catturare lo scroll esattamente all'inizio della pagina.
-        // window.scrollY è 0 all'inizio della pagina.
-        const isAtTopOfPage = window.scrollY < 50; // consideriamo "inizio pagina" se lo scroll è meno di 50px
-
-
-        // Il popup dovrebbe apparire se la home è la sezione "attiva" (in alto e ben visibile),
-        // e non è stata nascosta dal menu mobile.
         if (isAtTopOfPage && isHomeFullyInViewOrEntering && !secretPopupHiddenByMenu) {
             showSecretPopup();
         } else {
@@ -563,16 +535,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Inizializza il pop-up segreto come nascosto all'avvio
     if (secretPopup) {
         secretPopup.classList.add('is-hidden');
     }
 
-    // Event listener per i bottoni del pop-up segreto
     if (secretPopupButton) {
         secretPopupButton.addEventListener('click', function() {
             hideSecretPopup();
             secretPopupHiddenByMenu = false;
+            isSecretPopupManuallyClosed = true;
+            checkAndToggleSecretPopup();
         });
     }
 
@@ -580,39 +552,53 @@ document.addEventListener('DOMContentLoaded', function() {
         secretPopupClose.addEventListener('click', function() {
             hideSecretPopup();
             secretPopupHiddenByMenu = false;
+            isSecretPopupManuallyClosed = true;
+            checkAndToggleSecretPopup();
         });
     }
 
-    // Esegui il controllo del pop-up segreto all'avvio e durante scroll/resize
     let scrollOrResizeTimeout;
     window.addEventListener('scroll', function() {
         clearTimeout(scrollOrResizeTimeout);
-        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
+        if (!isSecretPopupManuallyClosed) {
+            scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
+        } else {
+            hideSecretPopup();
+        }
     });
     window.addEventListener('resize', function() {
         clearTimeout(scrollOrResizeTimeout);
-        scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
-    });
-
-    // Questo listener garantisce la comparsa iniziale su mobile
-    window.addEventListener('DOMContentLoaded', function() {
-        if (!hasSecretPopupAppearedOnce && window.innerWidth <= 768) {
-            setTimeout(() => {
-                const rect = homeSection.getBoundingClientRect();
-                // MODIFICA QUI: La condizione di apparizione iniziale deve essere molto stretta
-                // per assicurare che appaia solo quando la home è visibile per la prima volta
-                // e l'utente è all'inizio dello scroll.
-                if (rect.top === 0 && window.scrollY === 0 && !secretPopupHiddenByMenu) {
-                    showSecretPopup();
-                }
-            }, 500); // Ritardo per consentire al layout di stabilizzarsi
+        if (!isSecretPopupManuallyClosed) {
+            scrollOrResizeTimeout = setTimeout(checkAndToggleSecretPopup, 100);
+        } else {
+            hideSecretPopup();
         }
     });
 
-    window.addEventListener('load', checkAndToggleSecretPopup);
+    window.addEventListener('DOMContentLoaded', function() {
+        if (isSecretPopupManuallyClosed) {
+            hideSecretPopup();
+            return;
+        }
 
+        if (!hasSecretPopupAppearedOnce && window.innerWidth <= 768) {
+            setTimeout(() => {
+                const rect = homeSection.getBoundingClientRect();
+                if (rect.top === 0 && window.scrollY === 0 && !secretPopupHiddenByMenu && !isSecretPopupManuallyClosed) {
+                    showSecretPopup();
+                }
+            }, 500);
+        }
+    });
 
-    // --- Logica Pop-up Novità (News Popup) ---
+    window.addEventListener('load', function() {
+        if (isSecretPopupManuallyClosed) {
+            hideSecretPopup();
+        } else {
+            checkAndToggleSecretPopup();
+        }
+    });
+
     function showNewsPopup() {
         if (!newsPopup || newsPopup.classList.contains('is-active') || newsPopup.classList.contains('is-entering')) {
             return;
@@ -634,10 +620,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Mostra il news popup quando il DOM è completamente caricato
     setTimeout(showNewsPopup, 500);
 
-    // Chiudi il news popup quando si clicca il bottone di chiusura
     if (closeNewsPopupBtn) {
         closeNewsPopupBtn.addEventListener('click', hideNewsPopup);
     }
