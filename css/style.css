@@ -117,6 +117,31 @@ body.no-scroll {
 }
 
 @media (max-width: 768px) {
+    #formContainer.open {
+        max-height: 3000px;
+        padding: 0 1rem;
+    }
+
+    .ospitalita-form {
+        padding: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.95rem;
+    }
+
+    .form-submit {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+        margin: 1.5rem auto 0;
+    }
     .container {
         margin: 20px auto;
         padding: 20px;
@@ -783,7 +808,7 @@ button {
 }
 
 #formContainer.open {
-    max-height: 1570px;
+    max-height: 1500px;
     opacity: 1;
 }
 
@@ -1268,6 +1293,27 @@ button {
 
     .form-title {
         font-size: 1.8rem;
+    }
+    #formContainer.open {
+        max-height: 3500px;
+    }
+
+    .ospitalita-form {
+        padding: 1rem;
+    }
+
+    .form-title {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-label {
+        font-size: 1rem;
     }
 }
 
