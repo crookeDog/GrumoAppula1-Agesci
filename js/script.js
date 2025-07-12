@@ -81,7 +81,7 @@ function setupHospitalityForm() {
         if (cellulareField && cellulareField.value && !cellulareRegex.test(cellulareField.value.replace(/\s/g, ''))) {
             cellulareField.style.borderColor = '#e74c3c';
             isValid = false;
-        } else if (cellurareField) {
+        } else if (cellulareField) {
             cellulareField.style.borderColor = '#A3B18A';
         }
 
