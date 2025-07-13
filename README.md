@@ -34,4 +34,4 @@ This repository contains the source code for a web application or website relate
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information. (Note: You may need to create a `LICENSE` file if one does not exist.)
+Distributed under the MIT License. See `LICENSE` for more information.
