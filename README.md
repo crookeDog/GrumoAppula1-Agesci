@@ -6,9 +6,6 @@ This repository contains the source code for a web application or website relate
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
