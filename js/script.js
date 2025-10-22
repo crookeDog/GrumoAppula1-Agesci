@@ -147,6 +147,15 @@ function setupHospitalityForm() {
 function setupSubscriptionForm() {
     const form = document.getElementById('formIscrizione');
     if (!form) return;
+    const dataNascitaField = document.getElementById('dataNascitaIscrizione');
+    let formattedDateField = document.getElementById('dataNascitaFormattata');
+    if (!formattedDateField) {
+        formattedDateField = document.createElement('input');
+        formattedDateField.type = 'hidden';
+        formattedDateField.name = 'dataNascitaFormattata'; 
+        formattedDateField.id = 'dataNascitaFormattata';
+        form.appendChild(formattedDateField);
+    }
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -178,29 +187,33 @@ function setupSubscriptionForm() {
         } else if (telefonoGenitoreField) {
             telefonoGenitoreField.style.borderColor = '#A3B18A';
         }
-
-        const dataNascitaField = document.getElementById('dataNascitaIscrizione');
         if (dataNascitaField && dataNascitaField.value) {
             const oggi = new Date();
             oggi.setHours(0, 0, 0, 0);
             const dataNascita = new Date(dataNascitaField.value);
+
             if (dataNascita > oggi) {
                 dataNascitaField.style.borderColor = '#e74c3c';
                 isValid = false;
                 alert('La data di nascita non può essere nel futuro.');
             } else {
                 dataNascitaField.style.borderColor = '#A3B18A';
+                const giorno = String(dataNascita.getDate()).padStart(2, '0');
+                const mese = String(dataNascita.getMonth() + 1).padStart(2, '0');
+                const anno = dataNascita.getFullYear();
+                const dataFormattata = `${giorno}/${mese}/${anno}`;
+                formattedDateField.value = dataFormattata;
             }
         } else if (dataNascitaField && dataNascitaField.hasAttribute('required')) {
             dataNascitaField.style.borderColor = '#e74c3c';
             isValid = false;
         }
-
         if (isValid) {
             emailjs.sendForm('service_w00p4hu', 'template_irpk1cc', this)
                 .then(function() {
                     alert('Richiesta di iscrizione inviata con successo! Sarete contattati.');
                     form.reset();
+                    formattedDateField.value = ''; 
                     const resetFields = form.querySelectorAll('input, select, textarea');
                     resetFields.forEach(field => field.style.borderColor = '');
                 }, function(error) {
