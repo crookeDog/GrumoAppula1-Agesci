@@ -705,6 +705,30 @@ button {
     cursor: pointer;
 }
 
+.bottone-base{
+    background: #3A5A40;
+    color: white;
+    border: 2px solid white; 
+    padding: 1rem 3rem;
+    border-radius: 3.125rem;
+    font-family: "Patrick Hand SC", cursive;
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    text-decoration: none;
+    margin: 1.5rem;
+    min-width: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bottone-base:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
 .map-container {
     position: relative;
     border-radius: 20px;
