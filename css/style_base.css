@@ -1,0 +1,127 @@
+.scroller{
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        rgba(0, 0, 0, 1) 15%, 
+        rgba(0, 0, 0, 1) 85%, 
+        transparent
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        rgba(0, 0, 0, 1) 15%, 
+        rgba(0, 0, 0, 1) 85%, 
+        transparent
+    );
+}
+
+.scroller-interno {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    padding-right: 2.5rem;
+}
+
+.destra{
+    animation: scorrimento-verso-destra 28s infinite linear;
+}
+
+.sinistra{
+    animation: scorrimento-verso-sinistra 28s infinite linear;
+}
+
+.scroller-interno img {
+    flex: 0 0 5rem;
+    border-radius: 0.938rem;
+    height: 10rem;
+    width: fit-content;
+    object-fit: contain;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.scroller-interno img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes scorrimento-verso-destra {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes scorrimento-verso-sinistra {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.mariano-card {
+    background: #ffffff;
+    border-radius: 0.938rem;
+    padding: 1.875rem;
+    max-width: 31.25rem;
+    margin: 0 auto 2.5rem auto;
+    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.15);
+    color: #333;
+    text-align: center;
+}
+
+.mariano-card h3 {
+    font-family: "Patrick Hand SC", cursive;
+    font-size: 2.2rem;
+    color: #3A5A40;
+    margin-bottom: 1.25rem;
+}
+
+.mariano-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.938rem;
+    margin-bottom: 0.938rem;
+    font-family: "Quicksand", sans-serif;
+    font-size: 1.1rem;
+    }
+
+.mariano-info i {
+    color: #588157;
+    font-size: 1.5rem;
+}
+
+.mariano-info a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.mariano-info a:hover {
+    color: #588157;
+}
+
+.paragrafo-2 {
+    margin-top: 1.25rem;
+}
+
+.content-section {
+    padding-bottom: 6rem;
+}
+
+.altri-scatti {
+    font-family: 'Patrick Hand SC', cursive;
+    font-size: 2rem;
+    color: white;
+    margin: 3.125rem;
+}
