@@ -1,3 +1,4 @@
+emailjs.init("nYDOPQ5VAro73SKbL");
 function scrollToTopSmoothly() {
     window.scrollTo({
         top: 0,
