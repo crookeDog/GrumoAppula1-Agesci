@@ -1,4 +1,7 @@
-emailjs.init("nYDOPQ5VAro73SKbL");
+if (typeof emailjs !== 'undefined') {
+    emailjs.init("nYDOPQ5VAro73SKbL");
+}
+
 function scrollToTopSmoothly() {
     window.scrollTo({
         top: 0,
@@ -286,19 +289,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     if (secretPopupHiddenByMenu) {
                         secretPopupHiddenByMenu = false;
-                        const rect = homeSection.getBoundingClientRect();
-                        if (rect.top === 0) {
-                            if (!isSecretPopupManuallyClosed) {
-                                showSecretPopup();
+                        if (homeSection) {
+                            const rect = homeSection.getBoundingClientRect();
+                            if (rect.top === 0) {
+                                if (!isSecretPopupManuallyClosed) {
+                                    showSecretPopup();
+                                }
+                            } else {
+                                 hideSecretPopup();
                             }
-                        } else {
-                             hideSecretPopup();
                         }
                     }
                 }
             }
         }
     }
+
+    // Rende la funzione toggleMenu accessibile globalmente
+    window.toggleMenu = toggleMenu;
 
     if (menuToggle) {
         menuToggle.addEventListener('click', toggleMenu);
@@ -597,9 +605,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!hasSecretPopupAppearedOnce && window.innerWidth <= 768) {
             setTimeout(() => {
-                const rect = homeSection.getBoundingClientRect();
-                if (rect.top === 0 && window.scrollY === 0 && !secretPopupHiddenByMenu && !isSecretPopupManuallyClosed) {
-                    showSecretPopup();
+                // Aggiunto il controllo per homeSection qui!
+                if (homeSection) {
+                    const rect = homeSection.getBoundingClientRect();
+                    if (rect.top === 0 && window.scrollY === 0 && !secretPopupHiddenByMenu && !isSecretPopupManuallyClosed) {
+                        showSecretPopup();
+                    }
                 }
             }, 500);
         }
